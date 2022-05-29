@@ -33,7 +33,7 @@ export default function InfoBanner({
               alert('좋아요 클릭')
             }}
           >
-            {/* <FontAwesomeIcon icon={faHeartR} /> {goodCount} */}
+            {goodCount}
           </GoodBtn>
         </Good>
       </Wrap>
