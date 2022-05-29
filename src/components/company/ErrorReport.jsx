@@ -1,7 +1,9 @@
 import styled from '@emotion/styled'
+import { useState } from 'react'
 import { COLOR } from '../../constants'
 
 export default function ErrorReport({ corpId, corpName, view, setView }) {
+  const [reportMsg, setReportMsg] = useState('')
   return (
     <Container view={view}>
       {view ? (
@@ -22,8 +24,20 @@ export default function ErrorReport({ corpId, corpName, view, setView }) {
               <Input type="checkbox" id="corp_hr" />
               <span>이 회사의 인사담당자일 경우 선택해주세요.</span>
             </Label>
-            <Textarea></Textarea>
-            <Button type="submit">제출</Button>
+            <Textarea
+              placeholder="메시지를 입력해주세요."
+              value={reportMsg}
+              onChange={e => {
+                setReportMsg(e.target.value)
+              }}
+            ></Textarea>
+            <Button
+              type="submit"
+              isMsg={reportMsg ? true : false}
+              disabled={reportMsg ? false : true}
+            >
+              제출
+            </Button>
           </Form>
         </Wrap>
       ) : null}
@@ -144,10 +158,11 @@ const Textarea = styled.textarea`
   border: 1px solid ${COLOR.border};
 `
 const Button = styled.button`
+  cursor: ${props => (props.isMsg ? 'pointer' : 'not-allowed')};
   width: 100%;
   padding: 12px;
   color: #fff;
   font-size: 18px;
   font-weight: 700;
-  background-color: ${COLOR.report};
+  background-color: ${props => (props.isMsg ? COLOR.report : COLOR.gray)};
 `
