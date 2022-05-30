@@ -3,6 +3,7 @@ import { useState } from 'react'
 import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
 
+import Comments from '../../components/company/Comments'
 import InfoBanner from '../../components/company/InfoBanner'
 import Detail from '../../components/company/Detail'
 import ErrorReport from '../../components/company/ErrorReport'
@@ -44,6 +45,7 @@ export default function Home() {
           setView={setErrorReportModal}
         />
       </Contents>
+      <Comments />
     </>
   )
 }
@@ -69,20 +71,16 @@ const Details = styled.section`
 const ReportBtn = styled.button`
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0 6px;
   margin: 30px auto;
   padding: 7px 25px;
   background-color: #fff;
   color: #ff3d00;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   border: 2px solid #ff3d00;
   border-radius: 20px;
-  opacity: 0.5;
   img {
     width: 17px;
-  }
-  &:hover {
-    opacity: 1;
   }
 `
