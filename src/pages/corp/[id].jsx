@@ -12,12 +12,13 @@ export default function Home() {
   return (
     <>
       <InfoBanner
-        logo="https://media-exp1.licdn.com/dms/image/C560BAQFXeEWM-FoApw/company-logo_200_200/0/1519881499181?e=2147483647&v=beta&t=KM_FX6hrlfp-OCrbSa6qrckrxs_znCgT6oyrxEP_0RI"
         name="우아한형제들"
+        site="https://www.woowahan.com/"
+        career="https://career.woowahan.com/"
+        image="https://media-exp1.licdn.com/dms/image/C560BAQFXeEWM-FoApw/company-logo_200_200/0/1519881499181?e=2147483647&v=beta&t=KM_FX6hrlfp-OCrbSa6qrckrxs_znCgT6oyrxEP_0RI"
         stock={false}
-        goodCount={23}
-        goodcheck={false}
-        category="IT/플랫폼"
+        good={23}
+        category={['IT/플랫폼']}
       />
       <Contents>
         <Details>
