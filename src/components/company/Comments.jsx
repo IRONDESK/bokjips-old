@@ -1,15 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
 
 export default function Comments({ commentCount = 0 }) {
+  const [commentShow, setCommentShow] = useState(false)
   return (
     <Container>
       <Nav>
         <Title>댓글 {commentCount}개</Title>
-        <Write className="material-icons">drive_file_rename_outline</Write>
+        <Write
+          onClick={() => {
+            setCommentShow(!commentShow)
+          }}
+          className="material-icons"
+        >
+          edit
+        </Write>
       </Nav>
+      {commentShow ? (
+        <InputForm show={commentShow}>
+          <Input type="text" placeholder="내용을 입력하세요." />
+          <Submit type="submit" className="material-icons">
+            check
+          </Submit>
+        </InputForm>
+      ) : null}
       <Items>
         <Item>
           <p className="comment-text">
@@ -48,15 +64,43 @@ const Title = styled.h3`
 const Write = styled.button`
   width: 40px;
   height: 40px;
+  background-color: #000;
+  color: #fff;
   font-size: 28px;
   border-radius: 100%;
   &:hover {
-    background-color: #000;
-    color: #fff;
+    background-color: ${COLOR.main};
+  }
+`
+const InputForm = styled.form`
+  display: flex;
+  margin: 9px 0;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 0 5px;
+`
+const Input = styled.input`
+  padding: 5px 10px;
+  width: 95%;
+  height: 35px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 2px solid #000;
+  outline: none;
+  &:focus {
+    border-bottom: 2px solid ${COLOR.main};
+  }
+`
+const Submit = styled.button`
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  &:hover {
+    color: ${COLOR.main};
   }
 `
 const Items = styled.section`
-  margin: 30px 0 10px 0;
+  margin: 20px 0 10px 0;
 `
 const Item = styled.article`
   display: flex;
