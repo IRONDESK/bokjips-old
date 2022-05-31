@@ -8,18 +8,9 @@ export default function ErrorReport({ corpId, corpName, view, setView }) {
     <Container view={view}>
       {view ? (
         <Wrap>
-          <Close
-            onClick={() => {
-              setView(false)
-            }}
-          >
-            <span></span>
-            <i className="a11y-hidden">닫기</i>
-            <span></span>
-          </Close>
           <Title>오류 수정 요청</Title>
           <Form>
-            <CorpName>{corpName}</CorpName>
+            <CorpName>• 기업명 : {corpName}</CorpName>
             <Label htmlFor="corp_hr">
               <Input type="checkbox" id="corp_hr" />
               <span>이 회사의 인사담당자일 경우 선택해주세요.</span>
@@ -38,6 +29,15 @@ export default function ErrorReport({ corpId, corpName, view, setView }) {
             >
               제출
             </Button>
+            <Button
+              type="button"
+              isMsg={true}
+              onClick={() => {
+                setView(false)
+              }}
+            >
+              취소
+            </Button>
           </Form>
         </Wrap>
       ) : null}
@@ -47,49 +47,32 @@ export default function ErrorReport({ corpId, corpName, view, setView }) {
 
 const Container = styled.section`
   opacity: ${props => (props.view ? '1' : '0')};
+  z-index: ${props => (props.view ? '1' : '-1')};
   position: fixed;
   top: 0;
   left: 0;
-  width: ${props => (props.view ? '100vw' : '0')};
-  height: ${props => (props.view ? '100vh' : '0')};
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(256, 256, 256, 0.5);
   backdrop-filter: blur(20px);
   transition: all 0.3s;
 `
-const Close = styled.button`
-  position: absolute;
-  padding: 5px 1px 8px 1px;
-  width: 43px;
-  height: 40px;
-  top: -20px;
-  right: 0;
-  span {
-    position: absolute;
-    display: block;
-    width: 40px;
-    height: 5px;
-    background-color: #fff;
-    &:first-child {
-      transform: rotate(45deg);
-    }
-    &:last-child {
-      transform: rotate(135deg);
-    }
-  }
-  &:hover span {
-    background-color: ${COLOR.report};
-  }
-`
 const Wrap = styled.article`
   position: absolute;
+  z-index: 2;
+  padding: 15px 23px;
   top: 50%;
   left: 50%;
-  width: 380px;
-  height: 400px;
+  width: 400px;
+  height: 500px;
+  background-color: #fff;
   transform: translate(-50%, -50%);
+  border-radius: 20px;
+  box-shadow: 0 0 20px 3px #ff3c0078;
 `
 const Title = styled.h4`
   margin: 15px 0;
+  color: ${COLOR.report};
   font-size: 38px;
   font-weight: 800;
 `
@@ -103,10 +86,7 @@ const CorpName = styled.label`
   padding: 12px 6px;
   background-color: #fff;
   font-size: 19px;
-  color: ${COLOR.report};
   line-height: 18px;
-  text-align: center;
-  border: 1px solid ${COLOR.border};
 `
 const Label = styled.label`
   cursor: pointer;
