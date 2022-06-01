@@ -4,7 +4,10 @@ export const Title = ({ title }) => {
   return (
     <Head>
       <title>{title} | 복지편살</title>
-
+      <link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet"
+      />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta name="Description" content="" />

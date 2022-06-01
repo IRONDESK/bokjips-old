@@ -7,7 +7,6 @@ import ItemList from '../components/main/ItemList'
 export default function Home() {
   return (
     <>
-      <Banner />
       <Wrap>
         <ItemList />
       </Wrap>

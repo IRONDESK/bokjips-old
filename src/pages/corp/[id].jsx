@@ -3,6 +3,7 @@ import { useState } from 'react'
 import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
 
+import Comments from '../../components/company/Comments'
 import InfoBanner from '../../components/company/InfoBanner'
 import Detail from '../../components/company/Detail'
 import ErrorReport from '../../components/company/ErrorReport'
@@ -12,12 +13,13 @@ export default function Home() {
   return (
     <>
       <InfoBanner
-        logo="https://media-exp1.licdn.com/dms/image/C560BAQFXeEWM-FoApw/company-logo_200_200/0/1519881499181?e=2147483647&v=beta&t=KM_FX6hrlfp-OCrbSa6qrckrxs_znCgT6oyrxEP_0RI"
         name="우아한형제들"
+        site="https://www.woowahan.com/"
+        career="https://career.woowahan.com/"
+        image="https://media-exp1.licdn.com/dms/image/C560BAQFXeEWM-FoApw/company-logo_200_200/0/1519881499181?e=2147483647&v=beta&t=KM_FX6hrlfp-OCrbSa6qrckrxs_znCgT6oyrxEP_0RI"
         stock={false}
-        goodCount={23}
-        goodcheck={false}
-        category="IT/플랫폼"
+        good={23}
+        category={['IT/플랫폼']}
       />
       <Contents>
         <Details>
@@ -43,6 +45,7 @@ export default function Home() {
           setView={setErrorReportModal}
         />
       </Contents>
+      <Comments />
     </>
   )
 }
@@ -68,20 +71,16 @@ const Details = styled.section`
 const ReportBtn = styled.button`
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0 6px;
   margin: 30px auto;
   padding: 7px 25px;
   background-color: #fff;
   color: #ff3d00;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   border: 2px solid #ff3d00;
   border-radius: 20px;
-  opacity: 0.5;
   img {
     width: 17px;
-  }
-  &:hover {
-    opacity: 1;
   }
 `

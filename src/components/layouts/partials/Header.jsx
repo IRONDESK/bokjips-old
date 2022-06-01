@@ -1,58 +1,56 @@
+import Link from 'next/link'
 import styled from '@emotion/styled'
 import { COLOR } from '../../../constants'
 
 export const Header = () => {
   return (
     <Container>
-      <Title>
-        <LogoType>
-          <strong>복지</strong>
-          <br />
-          편살
-        </LogoType>
-        <Explain>
-          <strong>복</strong>잡한 <strong>복지</strong> 정보 <strong>편</strong>
-          하게 <strong>살</strong>펴보자
-        </Explain>
-      </Title>
-      <UserInfo>
-        <InfoList>로그인</InfoList>
-        <InfoList>회원정보</InfoList>
-      </UserInfo>
+      <Nav>
+        <Link href="/">
+          <Title>
+            <strong>복지</strong>
+            <br />
+            편살
+          </Title>
+        </Link>
+        <UserInfo>
+          <Item>로그인</Item>
+          <Item>회원가입</Item>
+        </UserInfo>
+      </Nav>
     </Container>
   )
 }
 
 const Container = styled.header`
+  border-bottom: 1px solid ${COLOR.gray};
+`
+const Nav = styled.nav`
+  position: relative;
   margin: 25px auto 10px auto;
   max-width: 1024px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
 `
 
-const Title = styled.div`
-  flex: 2;
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
+const Title = styled.h1`
+  cursor: pointer;
+  margin: 0 auto;
+  padding: 10px 0 0 0;
+  width: 100px;
+  font-weight: 800;
+  font-size: 45px;
+  font-family: 'GangwonEdu';
+  text-align: center;
+  line-height: 40px;
   strong {
     color: ${COLOR.main};
   }
 `
 
-const LogoType = styled.h1`
-  float: left;
-  font-weight: 800;
-  font-size: 41px;
-  line-height: 40px;
-`
-const Explain = styled.p`
-  font-size: 21px;
-`
-
 const UserInfo = styled.ul`
+  position: absolute;
   display: flex;
-  gap: 15px;
+  top: 0;
+  right: 0;
+  gap: 0 13px;
 `
-const InfoList = styled.li``
+const Item = styled.li``

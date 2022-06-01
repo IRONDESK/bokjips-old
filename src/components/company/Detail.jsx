@@ -25,12 +25,12 @@ export default function Detail({ kind, data }) {
 
 const Container = styled.article`
   padding: 23px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: 3px solid ${COLOR.gray};
 `
 const Title = styled.h4`
   font-weight: 700;
-  font-size: 25px;
+  font-size: 23px;
 `
 
 const List = styled.ul`
