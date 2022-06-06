@@ -22,11 +22,15 @@ export default function join() {
     setWait(false)
     e.preventDefault()
     axios
-      .post('http://52.79.165.66:8081/user/insert', {
-        email: userEmail,
-        name: userName,
-        password: userPwd,
-      })
+      .post(
+        'http://52.79.165.66:8081/user/insert',
+        JSON.stringify({
+          email: userEmail,
+          name: userName,
+          password: userPwd,
+        }),
+        { headers: { 'Content-Type': `application/json` } }
+      )
       .then((res) => {
         console.log(res)
       })
