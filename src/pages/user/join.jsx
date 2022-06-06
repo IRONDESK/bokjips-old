@@ -5,28 +5,42 @@ import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
 
 export default function join() {
-  const [userEmail, setUserEmail] = useState()
-  const [userName, setUserName] = useState()
-  const [userPwd, setUserPwd] = useState()
+  const [userEmail, setUserEmail] = useState('')
+  const [userName, setUserName] = useState('')
+  const [userPwd, setUserPwd] = useState('')
+  const [Wait, setWait] = useState(true)
 
   const EmailRegex =
     /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
   const PwdRegex = /(?=.*[~!@#$%^&*])[~!@#$%^&*]/
-  // axios.post('http://52.79.165.66:8081/user/insert', )
 
-  const EmailAutoComplete = e => {
+  const EmailAutoComplete = (e) => {
     setUserEmail(userEmail + e.target.innerHTML)
+  }
+
+  const handleSubmit = async (e) => {
+    setWait(false)
+    e.preventDefault()
+    axios
+      .post('http://52.79.165.66:8081/user/insert', {
+        email: userEmail,
+        name: userName,
+        password: userPwd,
+      })
+      .then((res) => {
+        console.log(res)
+      })
   }
   return (
     <>
       <Container>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Label htmlFor="user-email">
             이메일
             <Input
               id="user-email"
               type="text"
-              onChange={e => {
+              onChange={(e) => {
                 setUserEmail(e.target.value)
               }}
               value={userEmail}
@@ -47,7 +61,7 @@ export default function join() {
             이름
             <Input
               id="user-name"
-              onChange={e => {
+              onChange={(e) => {
                 setUserName(e.target.value)
               }}
               value={userName}
@@ -59,7 +73,7 @@ export default function join() {
             <Input
               type="password"
               id="user-pw"
-              onChange={e => {
+              onChange={(e) => {
                 setUserPwd(e.target.value)
               }}
               value={userPwd}
@@ -81,7 +95,8 @@ export default function join() {
               userPwd &&
               userPwd.length > 5 &&
               PwdRegex.test(userPwd) &&
-              EmailRegex.test(userEmail)
+              EmailRegex.test(userEmail) &&
+              Wait
                 ? false
                 : true
             }
@@ -164,20 +179,20 @@ const Item = styled.li`
   display: flex;
   margin-top: 5px;
   align-items: center;
-  color: ${prop => (prop.check ? COLOR.check : COLOR.darkgray)};
+  color: ${(prop) => (prop.check ? COLOR.check : COLOR.darkgray)};
   font-size: 14px;
   font-weight: 400;
   i {
     padding: 1.5px;
     margin-right: 3px;
     font-size: 13px;
-    background-color: ${prop => (prop.check ? COLOR.check : 'none')};
-    color: ${prop => (prop.check ? '#fff' : 'none')};
+    background-color: ${(prop) => (prop.check ? COLOR.check : 'none')};
+    color: ${(prop) => (prop.check ? '#fff' : 'none')};
     border-radius: 100%;
   }
 `
 const Button = styled.button`
-  cursor: ${prop => (prop.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${(prop) => (prop.disabled ? 'not-allowed' : 'pointer')};
   display: block;
   margin: 0 auto;
   width: 55px;
