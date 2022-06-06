@@ -45,7 +45,11 @@ export default function login() {
           }}
           value={userPwd}
         />
-        <Button type="submit" className="material-icons">
+        <Button
+          type="submit"
+          disabled={userEmail && userPwd.length > 5 ? false : true}
+          className="material-icons"
+        >
           check
         </Button>
         <JoinHref>
@@ -89,6 +93,7 @@ const Input = styled.input`
   }
 `
 const Button = styled.button`
+  cursor: ${(prop) => (prop.disabled ? 'not-allowed' : 'pointer')};
   display: block;
   margin: 0 auto;
   width: 55px;
