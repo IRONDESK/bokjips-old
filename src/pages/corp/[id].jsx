@@ -7,6 +7,7 @@ import Comments from '../../components/company/Comments'
 import InfoBanner from '../../components/company/InfoBanner'
 import Detail from '../../components/company/Detail'
 import ErrorReport from '../../components/company/ErrorReport'
+import MoreCorp from '../../components/company/MoreCorp'
 
 export default function Home() {
   const [errorReportModal, setErrorReportModal] = useState(false)
@@ -46,6 +47,7 @@ export default function Home() {
         />
       </Contents>
       <Comments />
+      <MoreCorp />
     </>
   )
 }

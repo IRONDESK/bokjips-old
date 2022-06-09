@@ -14,8 +14,12 @@ export const Header = () => {
           </Title>
         </Link>
         <UserInfo>
-          <Item>로그인</Item>
-          <Item>회원가입</Item>
+          <Item>
+            <Link href="/user/login">로그인</Link>
+          </Item>
+          <Item>
+            <Link href="/user/join">회원가입</Link>
+          </Item>
         </UserInfo>
       </Nav>
     </Container>
@@ -53,4 +57,6 @@ const UserInfo = styled.ul`
   right: 0;
   gap: 0 13px;
 `
-const Item = styled.li``
+const Item = styled.li`
+  font-size: 14px;
+`
