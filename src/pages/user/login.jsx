@@ -64,7 +64,7 @@ export default function login() {
 
 const Container = styled.main`
   position: relative;
-  height: 70vh;
+  height: 80vh;
 `
 const Form = styled.form`
   position: absolute;
@@ -75,6 +75,16 @@ const Form = styled.form`
   transform: translate(-50%, -50%);
   box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  &::before {
+    content: '로그인';
+    position: absolute;
+    display: inline-block;
+    top: -60px;
+    left: 50%;
+    font-size: 24px;
+    font-weight: 900;
+    transform: translateX(-50%);
+  }
 `
 const Label = styled.label`
   display: block;
