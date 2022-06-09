@@ -20,7 +20,9 @@ export default function login() {
         { headers: { 'Content-Type': `application/json` } }
       )
       .then((res) => {
-        console.log(res)
+        const { token, name } = res.data
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('user_name', name)
       })
   }
 
