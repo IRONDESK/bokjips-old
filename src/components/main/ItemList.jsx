@@ -9,8 +9,6 @@ export default function ItemList() {
         <CorpItem
           corp_id={1}
           name="우아한형제들"
-          site=""
-          career=""
           image="https://media-exp1.licdn.com/dms/image/C560BAQFXeEWM-FoApw/company-logo_200_200/0/1519881499181?e=2147483647&v=beta&t=KM_FX6hrlfp-OCrbSa6qrckrxs_znCgT6oyrxEP_0RI"
           stock={true}
           good="201"
@@ -20,9 +18,7 @@ export default function ItemList() {
         <CorpItem
           corp_id={1}
           name="직방"
-          site=""
-          career=""
-          image="image url"
+          image=""
           stock={true}
           good="201"
           category="IT"
