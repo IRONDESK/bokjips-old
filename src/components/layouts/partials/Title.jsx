@@ -1,9 +1,15 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 export const Title = ({ title }) => {
+  const router = useRouter()
   return (
     <Head>
-      <title>{title} | 복지편살</title>
+      <title>
+        {router.pathname === '/'
+          ? '복지편살 ─ 복잡한 복지 정보, 편하게 살펴보자'
+          : `${title} | 복지편살`}
+      </title>
       <link
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet"
@@ -16,7 +22,7 @@ export const Title = ({ title }) => {
       <meta property="og:type" content="website" />
       <meta
         property="og:site_name"
-        content="복지편살 - 복잡한 복지 정보 편하게 살펴보자"
+        content="복지편살 ─ 복잡한 복지 정보, 편하게 살펴보자"
       />
       <meta property="og:description" content="" />
       <meta property="og:image" content="./images/ogimage.jpg" />

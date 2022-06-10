@@ -4,6 +4,8 @@ import axios from 'axios'
 import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
 
+import { Title } from '../../components/layouts'
+
 export default function join() {
   const [userEmail, setUserEmail] = useState('')
   const [userName, setUserName] = useState('')
@@ -41,6 +43,7 @@ export default function join() {
 
   return (
     <>
+      <Title title={'회원가입'} />
       <Container>
         <Form onSubmit={handleSubmit}>
           <Label htmlFor="user-email">

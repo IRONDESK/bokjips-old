@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
+import { Title } from '../../components/layouts'
 
 import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
@@ -27,38 +28,41 @@ export default function login() {
   }
 
   return (
-    <Container>
-      <Form onSubmit={handleSubmit}>
-        <Label htmlFor="user-email">이메일</Label>
-        <Input
-          type="text"
-          id="user-email"
-          onChange={(e) => {
-            setUserEmail(e.target.value)
-          }}
-          value={userEmail}
-        />
-        <Label htmlFor="user-pw">비밀번호</Label>
-        <Input
-          type="password"
-          id="user-pw"
-          onChange={(e) => {
-            setUserPwd(e.target.value)
-          }}
-          value={userPwd}
-        />
-        <Button
-          type="submit"
-          disabled={userEmail && userPwd.length > 5 ? false : true}
-          className="material-icons"
-        >
-          check
-        </Button>
-        <JoinHref>
-          <Link href="/user/join">회원가입</Link>
-        </JoinHref>
-      </Form>
-    </Container>
+    <>
+      <Title title={'로그인'} />
+      <Container>
+        <Form onSubmit={handleSubmit}>
+          <Label htmlFor="user-email">이메일</Label>
+          <Input
+            type="text"
+            id="user-email"
+            onChange={(e) => {
+              setUserEmail(e.target.value)
+            }}
+            value={userEmail}
+          />
+          <Label htmlFor="user-pw">비밀번호</Label>
+          <Input
+            type="password"
+            id="user-pw"
+            onChange={(e) => {
+              setUserPwd(e.target.value)
+            }}
+            value={userPwd}
+          />
+          <Button
+            type="submit"
+            disabled={userEmail && userPwd.length > 5 ? false : true}
+            className="material-icons"
+          >
+            check
+          </Button>
+          <JoinHref>
+            <Link href="/user/join">회원가입</Link>
+          </JoinHref>
+        </Form>
+      </Container>
+    </>
   )
 }
 
