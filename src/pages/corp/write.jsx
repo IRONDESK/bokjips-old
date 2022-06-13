@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
@@ -7,66 +8,79 @@ import { Title } from '../../components/layouts'
 import Detail from '../../components/company/write/Detail'
 
 export default function write() {
-  //회사 기본정보
-  const [imgFile, setImgFile] = useState('')
-  const [corpName, setCorpName] = useState('')
-  const [corpStock, setCorpStock] = useState(false)
-  const [category, setCategory] = useState([])
-  /// 근무 조건
-  const [Condition, setCondition] = useState({})
-  const [WorkSupport, setWorkSupport] = useState({})
-  const [Support, setSupport] = useState({})
-  const [Environment, setEnvironment] = useState({})
-  const [Etc, setEtc] = useState({})
+  // useForm Handle
+  const { register, handleSubmit } = useForm()
+  const onSubmit = (data) => console.log('Data: ', data)
+
+  // category
+  const categories = [
+    'IT/플랫폼',
+    '유통',
+    '게임',
+    '건강/바이오',
+    '금융',
+    '문화',
+    '기타',
+  ]
 
   return (
     <>
       <Title title="새 회사 추가" />
       <Container>
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Top>
-            <ImgInput
-              type="file"
-              onChange={(e) => {
-                setImgFile(e.target.value)
-              }}
-              value={imgFile}
-            />
+            <ImgInput type="file" {...register('image')} />
             <Input
               type="text"
-              onChange={(e) => {
-                setCorpName(e.target.value)
-              }}
-              value={corpName}
+              placeholder="회사명"
+              {...register('name', {
+                required: true,
+              })}
             />
             <CheckInput
               type="checkbox"
-              onChange={(e) => {
-                setCorpStock(e.target.value)
-              }}
-              value={corpStock}
-            ></CheckInput>
+              {...register('stock', {
+                value: false,
+              })}
+            />
+            <Input
+              type="text"
+              placeholder="사이트"
+              {...register('site', {
+                required: true,
+              })}
+            />
+            <Input
+              type="text"
+              placeholder="회사 채용 사이트"
+              {...register('career', {
+                required: true,
+              })}
+            />
+            <Catagories>
+              {categories.map((el) => (
+                <RadioLabel key={el}>
+                  <RadioInput
+                    {...register('category')}
+                    type="radio"
+                    htmlFor="category"
+                    value={el}
+                  />
+                  {el}
+                </RadioLabel>
+              ))}
+            </Catagories>
           </Top>
           <Bottom>
-            <Detail
-              value={Condition}
-              setValue={setCondition}
-              kind="condition"
-            />
-            <Detail
-              value={WorkSupport}
-              setValue={setWorkSupport}
-              kind="worksupport"
-            />
-            <Detail value={Support} setValue={setSupport} kind="support" />
-            <Detail
-              value={Environment}
-              setValue={setEnvironment}
-              kind="environment"
-            />
-            <Detail value={Etc} setValue={setEtc} kind="etc" />
+            <Detail kind="condition" formRegister={register} />
+            <Detail kind="worksupport" formRegister={register} />
+            <Detail kind="support" formRegister={register} />
+            <Detail kind="environment" formRegister={register} />
+            <Detail kind="etc" formRegister={register} />
           </Bottom>
-          <Submit type="submit">제출</Submit>
+          <Submit type="submit" className="material-icons">
+            check
+          </Submit>
         </Form>
       </Container>
     </>
@@ -74,16 +88,19 @@ export default function write() {
 }
 
 const Container = styled.main`
-  margin: 40px auto;
+  margin: 0 auto;
   max-width: 1024px;
   @media (max-width: 1024px) {
     padding: 0 30px;
   } ;
 `
-const Form = styled.form`
-  height: 100vh;
+const Form = styled.form``
+const Top = styled.section`
+  margin: 20px 0;
+  padding: 30px 20px;
+  background-color: ${COLOR.main};
+  border-radius: 10px;
 `
-const Top = styled.section``
 const Bottom = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -97,4 +114,22 @@ const Bottom = styled.section`
 const ImgInput = styled.input``
 const Input = styled.input``
 const CheckInput = styled.input``
-const Submit = styled.button``
+const RadioInput = styled.input``
+const RadioLabel = styled.label``
+const Catagories = styled.article``
+const Submit = styled.button`
+  /* cursor: ${(prop) => (prop.disabled ? 'not-allowed' : 'pointer')}; */
+  display: block;
+  margin: 35px auto;
+  width: 55px;
+  height: 55px;
+  font-size: 28px;
+  border: 2px solid #000;
+  border-radius: 100%;
+  &:focus,
+  &:hover {
+    background-color: ${COLOR.main};
+    border: 2px solid ${COLOR.main};
+    color: #fff;
+  }
+`

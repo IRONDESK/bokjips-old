@@ -11,7 +11,7 @@ const DataKinds = {
   etc: ['기타 사항', '#898989'],
 }
 
-export default function Detail({ kind, value, setValue }) {
+export default function Detail({ kind, formRegister }) {
   const [itemAmount, setItemAmount] = useState([1])
   const AddItemAmount = (e) => {
     e.preventDefault()
@@ -32,12 +32,18 @@ export default function Detail({ kind, value, setValue }) {
         {itemAmount.map((el) => (
           <SubList key={`${el}-sublist`}>
             <SubTitle
+              id={`${el}-subtitle`}
               color={DataKinds[kind][1]}
               placeholder="제목을 입력하세요."
+              {...formRegister(`welfareList.${kind}.${el - 1}.subTitle`, {
+                required: kind == 'etc' ? false : true,
+              })}
             />
             <OptionTxt
+              id={`${el}-option`}
               color={DataKinds[kind][1]}
               placeholder="상세내용을 입력하세요.(선택)"
+              {...formRegister(`welfareList.${kind}.${el - 1}.options`)}
             />
           </SubList>
         ))}
