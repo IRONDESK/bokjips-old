@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
 
 import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
@@ -10,7 +11,12 @@ import Detail from '../../components/company/write/Detail'
 export default function write() {
   // useForm Handle
   const { register, handleSubmit } = useForm()
-  const onSubmit = (data) => console.log('Data: ', data)
+  const onSubmit = (data) => {
+    console.log('Data: ', data)
+    axios.post('http://52.79.165.66:8081/corp/insert', data).then((res) => {
+      console.log('res :', res)
+    })
+  }
 
   // category
   const categories = [
