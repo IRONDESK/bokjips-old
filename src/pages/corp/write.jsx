@@ -6,6 +6,7 @@ import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
 
 import { Title } from '../../components/layouts'
+import TopForm from '../../components/company/write/TopForm'
 import Detail from '../../components/company/write/Detail'
 
 export default function write() {
@@ -13,70 +14,17 @@ export default function write() {
   const { register, handleSubmit } = useForm()
   const onSubmit = (data) => {
     console.log('Data: ', data)
-    axios.post('http://52.79.165.66:8081/corp/insert', data).then((res) => {
-      console.log('res :', res)
-    })
+    // axios.post('http://52.79.165.66:8081/corp/insert', data).then((res) => {
+    //   console.log('res :', res)
+    // })
   }
-
-  // category
-  const categories = [
-    'IT/플랫폼',
-    '유통',
-    '게임',
-    '건강/바이오',
-    '금융',
-    '문화',
-    '기타',
-  ]
 
   return (
     <>
       <Title title="새 회사 추가" />
       <Container>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Top>
-            <ImgInput type="file" {...register('image')} />
-            <Input
-              type="text"
-              placeholder="회사명"
-              {...register('name', {
-                required: true,
-              })}
-            />
-            <CheckInput
-              type="checkbox"
-              {...register('stock', {
-                value: false,
-              })}
-            />
-            <Input
-              type="text"
-              placeholder="사이트"
-              {...register('site', {
-                required: true,
-              })}
-            />
-            <Input
-              type="text"
-              placeholder="회사 채용 사이트"
-              {...register('career', {
-                required: true,
-              })}
-            />
-            <Catagories>
-              {categories.map((el) => (
-                <RadioLabel key={el}>
-                  <RadioInput
-                    {...register('category')}
-                    type="radio"
-                    htmlFor="category"
-                    value={el}
-                  />
-                  {el}
-                </RadioLabel>
-              ))}
-            </Catagories>
-          </Top>
+          <TopForm register={register} />
           <Bottom>
             <Detail kind="condition" formRegister={register} />
             <Detail kind="worksupport" formRegister={register} />
@@ -101,12 +49,7 @@ const Container = styled.main`
   } ;
 `
 const Form = styled.form``
-const Top = styled.section`
-  margin: 20px 0;
-  padding: 30px 20px;
-  background-color: ${COLOR.main};
-  border-radius: 10px;
-`
+
 const Bottom = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -117,12 +60,6 @@ const Bottom = styled.section`
   } ;
 `
 
-const ImgInput = styled.input``
-const Input = styled.input``
-const CheckInput = styled.input``
-const RadioInput = styled.input``
-const RadioLabel = styled.label``
-const Catagories = styled.article``
 const Submit = styled.button`
   /* cursor: ${(prop) => (prop.disabled ? 'not-allowed' : 'pointer')}; */
   display: block;
