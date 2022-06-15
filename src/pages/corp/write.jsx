@@ -7,7 +7,7 @@ import { COLOR } from '../../constants'
 
 import { Title } from '../../components/layouts'
 import TopForm from '../../components/company/write/TopForm'
-import Detail from '../../components/company/write/Detail'
+import BottomForm from '../../components/company/write/BottomForm'
 
 export default function write() {
   // useForm Handle
@@ -25,13 +25,7 @@ export default function write() {
       <Container>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <TopForm register={register} />
-          <Bottom>
-            <Detail kind="condition" formRegister={register} />
-            <Detail kind="worksupport" formRegister={register} />
-            <Detail kind="support" formRegister={register} />
-            <Detail kind="environment" formRegister={register} />
-            <Detail kind="etc" formRegister={register} />
-          </Bottom>
+          <BottomForm register={register} />
           <Submit type="submit" className="material-icons">
             check
           </Submit>
@@ -49,16 +43,6 @@ const Container = styled.main`
   } ;
 `
 const Form = styled.form``
-
-const Bottom = styled.section`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
-  @media (max-width: 1024px) {
-    display: flex;
-    flex-direction: column;
-  } ;
-`
 
 const Submit = styled.button`
   /* cursor: ${(prop) => (prop.disabled ? 'not-allowed' : 'pointer')}; */

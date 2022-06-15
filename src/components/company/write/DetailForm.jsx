@@ -11,7 +11,7 @@ const DataKinds = {
   etc: ['기타 사항', '#898989'],
 }
 
-export default function Detail({ kind, formRegister }) {
+export default function DetailForm({ kind, formRegister }) {
   const [itemAmount, setItemAmount] = useState([1])
   const AddItemAmount = (e) => {
     e.preventDefault()
