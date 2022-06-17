@@ -5,8 +5,6 @@ import { COLOR } from '../../constants'
 export default function CorpItem({
   corp_id,
   name,
-  site,
-  career,
   category,
   stock,
   good,
@@ -65,7 +63,7 @@ const Info = styled.div`
   padding: 0 17px;
   width: 380px;
 `
-const TitleWrap = styled.p`
+const TitleWrap = styled.div`
   display: flex;
   margin: 0 0 7px 0;
   align-items: center;

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
 
+import { Title } from '../../components/layouts'
 import Comments from '../../components/company/Comments'
 import InfoBanner from '../../components/company/InfoBanner'
 import Detail from '../../components/company/Detail'
@@ -13,6 +14,7 @@ export default function Home() {
   const [errorReportModal, setErrorReportModal] = useState(false)
   return (
     <>
+      <Title title={'우아한형제들'} />
       <InfoBanner
         name="우아한형제들"
         site="https://www.woowahan.com/"

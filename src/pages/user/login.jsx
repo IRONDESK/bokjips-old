@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
+import { Title } from '../../components/layouts'
 
 import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
@@ -20,49 +21,54 @@ export default function login() {
         { headers: { 'Content-Type': `application/json` } }
       )
       .then((res) => {
-        console.log(res)
+        const { token, name } = res.data
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('user_name', name)
       })
   }
 
   return (
-    <Container>
-      <Form onSubmit={handleSubmit}>
-        <Label htmlFor="user-email">이메일</Label>
-        <Input
-          type="text"
-          id="user-email"
-          onChange={(e) => {
-            setUserEmail(e.target.value)
-          }}
-          value={userEmail}
-        />
-        <Label htmlFor="user-pw">비밀번호</Label>
-        <Input
-          type="password"
-          id="user-pw"
-          onChange={(e) => {
-            setUserPwd(e.target.value)
-          }}
-          value={userPwd}
-        />
-        <Button
-          type="submit"
-          disabled={userEmail && userPwd.length > 5 ? false : true}
-          className="material-icons"
-        >
-          check
-        </Button>
-        <JoinHref>
-          <Link href="/user/join">회원가입</Link>
-        </JoinHref>
-      </Form>
-    </Container>
+    <>
+      <Title title={'로그인'} />
+      <Container>
+        <Form onSubmit={handleSubmit}>
+          <Label htmlFor="user-email">이메일</Label>
+          <Input
+            type="text"
+            id="user-email"
+            onChange={(e) => {
+              setUserEmail(e.target.value)
+            }}
+            value={userEmail}
+          />
+          <Label htmlFor="user-pw">비밀번호</Label>
+          <Input
+            type="password"
+            id="user-pw"
+            onChange={(e) => {
+              setUserPwd(e.target.value)
+            }}
+            value={userPwd}
+          />
+          <Button
+            type="submit"
+            disabled={userEmail && userPwd.length > 5 ? false : true}
+            className="material-icons"
+          >
+            check
+          </Button>
+          <JoinHref>
+            <Link href="/user/join">회원가입</Link>
+          </JoinHref>
+        </Form>
+      </Container>
+    </>
   )
 }
 
 const Container = styled.main`
   position: relative;
-  height: 70vh;
+  height: 80vh;
 `
 const Form = styled.form`
   position: absolute;
@@ -73,6 +79,16 @@ const Form = styled.form`
   transform: translate(-50%, -50%);
   box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  &::before {
+    content: '로그인';
+    position: absolute;
+    display: inline-block;
+    top: -60px;
+    left: 50%;
+    font-size: 24px;
+    font-weight: 900;
+    transform: translateX(-50%);
+  }
 `
 const Label = styled.label`
   display: block;

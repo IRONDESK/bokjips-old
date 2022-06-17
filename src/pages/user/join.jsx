@@ -4,15 +4,18 @@ import axios from 'axios'
 import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
 
+import { Title } from '../../components/layouts'
+
 export default function join() {
   const [userEmail, setUserEmail] = useState('')
   const [userName, setUserName] = useState('')
   const [userPwd, setUserPwd] = useState('')
   const [Wait, setWait] = useState(true)
+  const [LoginRes, setLoginRes] = useState({})
 
   const EmailRegex =
     /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-  const PwdRegex = /(?=.*[~!@#$%^&*])[~!@#$%^&*]/
+  const PwdRegex = /(?=.*[!@#])[!@#]/
 
   const EmailAutoComplete = (e) => {
     setUserEmail(userEmail + e.target.innerHTML)
@@ -33,10 +36,14 @@ export default function join() {
       )
       .then((res) => {
         console.log(res)
+        setWait(true)
+        setLoginRes(res.data)
       })
   }
+
   return (
     <>
+      <Title title={'회원가입'} />
       <Container>
         <Form onSubmit={handleSubmit}>
           <Label htmlFor="user-email">
@@ -70,7 +77,6 @@ export default function join() {
               }}
               value={userName}
             />
-            {/* <Alert>이미 존재하는 이름입니다.</Alert> */}
           </Label>
           <Label htmlFor="user-pw">
             비밀번호
@@ -88,7 +94,7 @@ export default function join() {
               </Item>
               <Item check={userPwd && PwdRegex.test(userPwd)}>
                 <i className="material-icons">check</i>한 개 이상의 특수문자
-                포함 (~!@#$%^&*)
+                포함 (@, !, #)
               </Item>
             </PwdCheck>
           </Label>
@@ -107,6 +113,11 @@ export default function join() {
           >
             subdirectory_arrow_right
           </Button>
+          {LoginRes?.code ? (
+            <ErrorMsg>
+              <i className="material-icons">error</i> {LoginRes.message}
+            </ErrorMsg>
+          ) : null}
         </Form>
       </Container>
     </>
@@ -115,7 +126,7 @@ export default function join() {
 
 const Container = styled.main`
   position: relative;
-  height: 70vh;
+  height: 80vh;
 `
 const Form = styled.form`
   position: absolute;
@@ -123,10 +134,20 @@ const Form = styled.form`
   top: 50%;
   left: 50%;
   width: 350px;
-  height: 450px;
+  height: 480px;
   transform: translate(-50%, -50%);
   box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  &::before {
+    content: '회원가입';
+    position: absolute;
+    display: inline-block;
+    top: -60px;
+    left: 50%;
+    font-size: 24px;
+    font-weight: 900;
+    transform: translateX(-50%);
+  }
 `
 const Label = styled.label`
   display: block;
@@ -209,5 +230,19 @@ const Button = styled.button`
     background-color: ${COLOR.main};
     border: 2px solid ${COLOR.main};
     color: #fff;
+  }
+`
+const ErrorMsg = styled.p`
+  margin: 9px 0 0 0;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: ${`rgba(${COLOR.reportrgb}, 0.1)`};
+  color: ${COLOR.report};
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  i {
+    margin: 0 5px;
   }
 `

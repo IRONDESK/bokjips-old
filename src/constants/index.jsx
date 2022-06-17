@@ -5,5 +5,6 @@ export const COLOR = {
   gray: '#E3E3E3',
   darkgray: '#777',
   report: '#ff3d00',
+  reportrgb: '255, 61, 0',
   check: '#4dce2d',
 }
