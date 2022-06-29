@@ -7,16 +7,21 @@ import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
 
 export default function login() {
-  const [userEmail, setUserEmail] = useState('')
-  const [userPwd, setUserPwd] = useState('')
+  const [userInput, setUserInput] = useState({
+    email: '',
+    password: '',
+  })
+  const handleUserInput = (e) => {
+    setUserInput({ ...userInput, [e.target.name]: e.target.value })
+  }
   const handleSubmit = async (e) => {
     e.preventDefault()
     axios
       .post(
         'http://52.79.165.66:8081/user/login',
         JSON.stringify({
-          email: userEmail,
-          password: userPwd,
+          email: userInput.email,
+          password: userInput.password,
         }),
         { headers: { 'Content-Type': `application/json` } }
       )
@@ -35,24 +40,22 @@ export default function login() {
           <Label htmlFor="user-email">이메일</Label>
           <Input
             type="text"
-            id="user-email"
-            onChange={(e) => {
-              setUserEmail(e.target.value)
-            }}
-            value={userEmail}
+            name="email"
+            value={userInput.email}
+            onChange={handleUserInput}
           />
           <Label htmlFor="user-pw">비밀번호</Label>
           <Input
             type="password"
-            id="user-pw"
-            onChange={(e) => {
-              setUserPwd(e.target.value)
-            }}
-            value={userPwd}
+            name="password"
+            value={userInput.password}
+            onChange={handleUserInput}
           />
           <Button
             type="submit"
-            disabled={userEmail && userPwd.length > 5 ? false : true}
+            disabled={
+              userInput.email && userInput.password.length > 5 ? false : true
+            }
             className="material-icons"
           >
             check
