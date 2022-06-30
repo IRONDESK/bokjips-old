@@ -4,23 +4,15 @@ import { keyframes } from '@emotion/react'
 import { COLOR } from '../constants'
 
 function ModalAlert({ typeError, text }) {
-  const [view, setView] = useState(true)
-  setTimeout(() => {
-    setView(false)
-  }, 3800)
   return (
-    <>
-      {view ? (
-        <Wrap view={view}>
-          <Message typeColor={typeError}>
-            <span className="material-icons">
-              {typeError ? 'priority_high' : 'check'}
-            </span>
-            {text}
-          </Message>
-        </Wrap>
-      ) : null}
-    </>
+    <Wrap>
+      <Message typeColor={typeError}>
+        <span className="material-icons">
+          {typeError ? 'priority_high' : 'check'}
+        </span>
+        {text}
+      </Message>
+    </Wrap>
   )
 }
 
@@ -40,7 +32,6 @@ const Popup = keyframes`
 `
 
 const Wrap = styled.article`
-  display: ${(prop) => (prop.view ? 'block' : 'none')};
   position: fixed;
   margin: 0 auto;
   padding: 0 20px;
