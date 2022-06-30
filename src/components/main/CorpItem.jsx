@@ -14,14 +14,21 @@ export default function CorpItem({
   return (
     <Container>
       <Top>
-        <Logo src={image} alt={name} />
+        <Logo
+          src="https://media-exp1.licdn.com/dms/image/C560BAQFXeEWM-FoApw/company-logo_200_200/0/1519881499181?e=2147483647&v=beta&t=KM_FX6hrlfp-OCrbSa6qrckrxs_znCgT6oyrxEP_0RI"
+          alt={name}
+        />
         <Info>
           <TitleWrap>
             <Name>{name}</Name>
             {stock ? <StockTag src="/images/icons/stock.svg" /> : null}
             <CategoryTag>{category}</CategoryTag>
           </TitleWrap>
-          <Welfare>{welfareList}</Welfare>
+          <WelfareWrap>
+            {welfareList.slice(0, 7).map((el) => (
+              <Welfare>{el}</Welfare>
+            ))}
+          </WelfareWrap>
         </Info>
       </Top>
 
@@ -72,6 +79,11 @@ const Name = styled.h3`
   display: inline-block;
   font-weight: 800;
   font-size: 23px;
+  @media (max-width: 1024px) {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  } ;
 `
 const StockTag = styled.img`
   margin: 0 2px;
@@ -81,6 +93,7 @@ const StockTag = styled.img`
 const CategoryTag = styled.span`
   display: inline-block;
   margin: 0 3px;
+  padding: 1px 5px;
   min-width: 50px;
   background-color: ${COLOR.gray};
   font-size: 14px;
@@ -88,7 +101,16 @@ const CategoryTag = styled.span`
   text-align: center;
   border-radius: 15px;
 `
-const Welfare = styled.ul``
+const WelfareWrap = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 4px;
+`
+const Welfare = styled.li`
+  padding: 2px 3px;
+  font-size: 14px;
+  border: 1px solid #000;
+`
 const Options = styled.div`
   position: absolute;
   display: flex;

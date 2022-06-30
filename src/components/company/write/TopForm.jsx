@@ -21,7 +21,11 @@ function TopForm({ register }) {
   }
   return (
     <Container>
-      <ImgInput type="file" id="img-attach" {...register('image')} />
+      <ImgInput
+        // type="file"
+        id="img-attach"
+        {...register('image')}
+      />
       <ImgLabel htmlFor="img-attach" className="material-icons">
         add_photo_alternate
         <span className="a11y-hidden">이미지 첨부</span>
@@ -43,7 +47,7 @@ function TopForm({ register }) {
                 <CategoryItem key={el}>
                   <RadioLabel>
                     <RadioInput
-                      {...register('category')}
+                      {...register('category.0')}
                       type="radio"
                       htmlFor="category"
                       value={el}
