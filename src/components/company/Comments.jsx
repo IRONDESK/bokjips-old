@@ -18,14 +18,16 @@ export default function Comments({ commentCount = 0 }) {
           edit
         </Write>
       </Nav>
-      {commentShow ? (
-        <InputForm show={commentShow}>
-          <Input type="text" placeholder="내용을 입력하세요." />
-          <Submit type="submit" className="material-icons">
-            check
-          </Submit>
-        </InputForm>
-      ) : null}
+      <InputForm show={commentShow}>
+        {commentShow ? (
+          <>
+            <Input type="text" placeholder="내용을 입력하세요." />
+            <Submit type="submit" className="material-icons">
+              check
+            </Submit>
+          </>
+        ) : null}
+      </InputForm>
       <Items>
         <Item>
           <p className="comment-text">
@@ -75,9 +77,12 @@ const Write = styled.button`
 const InputForm = styled.form`
   display: flex;
   margin: 9px 0;
+  height: ${prop => (prop.show ? '45px' : '0')};
+  opacity: ${prop => (prop.show ? '1' : '0')};
   align-items: center;
   justify-content: space-evenly;
   gap: 0 5px;
+  transition: all 0.3s;
 `
 const Input = styled.input`
   padding: 5px 10px;

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
 
-export default function Banner() {
+export default function FilterList() {
   return (
     <Container>
       <Wrap>
