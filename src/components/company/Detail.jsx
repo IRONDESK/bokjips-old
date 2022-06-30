@@ -14,10 +14,14 @@ export default function Detail({ kind, data }) {
     <Container>
       <Title>{DataKinds[kind][0]}</Title>
       <List>
-        <SubList>
-          <SubTitle color={DataKinds[kind][1]}>유연근무제</SubTitle>
-          <OptionTxt color={DataKinds[kind][1]}>텍스트예시</OptionTxt>
-        </SubList>
+        {data
+          ? data?.map((el, index) => (
+              <SubList el={'kind' + index}>
+                <SubTitle color={DataKinds[kind][1]}>{el.subTitle}</SubTitle>
+                <OptionTxt color={DataKinds[kind][1]}>{el.options}</OptionTxt>
+              </SubList>
+            ))
+          : null}
       </List>
     </Container>
   )
@@ -43,13 +47,13 @@ const SubTitle = styled.span`
   display: inline-block;
   margin-right: 7px;
   padding: 6px 8px;
-  background-color: ${props => props.color};
+  background-color: ${(props) => props.color};
   color: #fff;
   font-size: 17px;
   font-weight: 500;
   border-radius: 15px;
 `
 const OptionTxt = styled.span`
-  color: ${props => props.color};
+  color: ${(props) => props.color};
   font-size: 17px;
 `

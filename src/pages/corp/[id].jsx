@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import axios from 'axios'
 
 import styled from '@emotion/styled'
 import { COLOR } from '../../constants'
@@ -11,26 +13,46 @@ import ErrorReport from '../../components/company/ErrorReport'
 import MoreCorp from '../../components/company/MoreCorp'
 
 export default function Home() {
+  const router = useRouter()
+  const corpId = router.query.id
+  const [data, setData] = useState()
   const [errorReportModal, setErrorReportModal] = useState(false)
+
+  useEffect(() => {
+    axios.get(`http://52.79.165.66:8081/corp/select/${corpId}`).then((res) => {
+      setData(res?.data)
+    })
+  }, [corpId])
+
   return (
     <>
-      <Title title={'우아한형제들'} />
+      <Title title={data?.name} />
       <InfoBanner
-        name="우아한형제들"
-        site="https://www.woowahan.com/"
-        career="https://career.woowahan.com/"
-        image="https://media-exp1.licdn.com/dms/image/C560BAQFXeEWM-FoApw/company-logo_200_200/0/1519881499181?e=2147483647&v=beta&t=KM_FX6hrlfp-OCrbSa6qrckrxs_znCgT6oyrxEP_0RI"
-        stock={false}
-        good={23}
-        category={['IT/플랫폼']}
+        name={data?.name}
+        site={data?.site}
+        career={data?.career}
+        image={data?.image}
+        stock={data?.stock}
+        good={data?.good}
+        category={data?.category}
       />
       <Contents>
         <Details>
-          <Detail kind="condition" />
-          <Detail kind="worksupport" />
-          <Detail kind="support" />
-          <Detail kind="environment" />
-          <Detail kind="etc" />
+          {data ? (
+            <>
+              <Detail kind="condition" data={data?.welfareList?.condition} />
+              <Detail
+                kind="worksupport"
+                data={data?.welfareList?.worksupport}
+              />
+              <Detail kind="support" data={data?.welfareList?.support} />
+              <Detail
+                kind="environment"
+                data={data?.welfareList?.environment}
+              />
+              <Detail kind="etc" data={data?.welfareList?.etc} />
+            </>
+          ) : null}
         </Details>
         <ReportBtn
           type="button"
@@ -38,12 +60,12 @@ export default function Home() {
             setErrorReportModal(true)
           }}
         >
-          <img src="/images/icons/msg-exclam.svg" />
+          <span className="material-icons">priority_high</span>
           오류 수정 요청
         </ReportBtn>
         <ErrorReport
           corpId={0}
-          corpName={'우아한형제들'}
+          corpName={data?.name}
           view={errorReportModal}
           setView={setErrorReportModal}
         />
@@ -75,16 +97,17 @@ const Details = styled.section`
 const ReportBtn = styled.button`
   display: flex;
   align-items: center;
-  gap: 0 6px;
   margin: 30px auto;
-  padding: 7px 25px;
-  background-color: #fff;
-  color: #ff3d00;
-  font-size: 15px;
+  color: ${COLOR.report};
+  font-size: 13px;
   font-weight: 500;
-  border: 2px solid #ff3d00;
-  border-radius: 20px;
-  img {
-    width: 17px;
+  span {
+    display: inline-block;
+    margin: 0 6px 0 0;
+    padding: 3px;
+    background-color: ${COLOR.report};
+    color: #fff;
+    font-size: inherit;
+    border-radius: 100%;
   }
 `

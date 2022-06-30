@@ -1,7 +1,8 @@
 import { useState } from 'react'
-
 import styled from '@emotion/styled'
 import { COLOR } from '../../../constants'
+
+import ModalAlert from '../../ModalAlert'
 
 const DataKinds = {
   condition: ['근무 조건', '#E86A6A'],
@@ -13,6 +14,7 @@ const DataKinds = {
 
 export default function DetailForm({ kind, formRegister }) {
   const [itemAmount, setItemAmount] = useState([1])
+  const [showAlert, setShowAlert] = useState(false)
   const AddItemAmount = (e) => {
     e.preventDefault()
     setItemAmount([...itemAmount, itemAmount.length + 1])
@@ -22,7 +24,10 @@ export default function DetailForm({ kind, formRegister }) {
     if (itemAmount.length > 1) {
       setItemAmount(itemAmount.slice(0, -1))
     } else {
-      alert('모든 항목을 지울 수 없습니다.')
+      setShowAlert(true)
+      setTimeout(() => {
+        setShowAlert(false)
+      }, 3800)
     }
   }
   return (
@@ -48,6 +53,12 @@ export default function DetailForm({ kind, formRegister }) {
           </SubList>
         ))}
       </List>
+      {showAlert ? (
+        <ModalAlert
+          typeError={true}
+          text={'최소 1개 이상의 항목이 입력되야 합니다.'}
+        />
+      ) : null}
       <Buttons>
         <Button className="material-icons" onClick={AddItemAmount}>
           add

@@ -7,4 +7,5 @@ export const COLOR = {
   report: '#ff3d00',
   reportrgb: '255, 61, 0',
   check: '#4dce2d',
+  modal: '#444',
 }
