@@ -25,8 +25,8 @@ export default function CorpItem({
             <CategoryTag>{category}</CategoryTag>
           </TitleWrap>
           <WelfareWrap>
-            {welfareList.slice(0, 7).map((el) => (
-              <Welfare>{el}</Welfare>
+            {welfareList.slice(0, 7).map((el, index) => (
+              <Welfare key={index}>{el}</Welfare>
             ))}
           </WelfareWrap>
         </Info>

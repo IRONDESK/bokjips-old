@@ -16,7 +16,7 @@ export default function Detail({ kind, data }) {
       <List>
         {data
           ? data?.map((el, index) => (
-              <SubList el={'kind' + index}>
+              <SubList key={'kind' + index}>
                 <SubTitle color={DataKinds[kind][1]}>{el.subTitle}</SubTitle>
                 <OptionTxt color={DataKinds[kind][1]}>{el.options}</OptionTxt>
               </SubList>
