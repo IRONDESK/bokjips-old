@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
 import axios from 'axios'
-import { COLOR } from '../../constants'
 
 import CorpItem from './CorpItem'
 
-export default function ItemList() {
+export default function ItemList({ setItemLength }) {
   const [corpData, setCorpData] = useState()
   useEffect(() => {
     axios.get('http://52.79.165.66:8081/corp/select').then((res) => {
-      // console.log(res.data.dtoList)
       setCorpData(res?.data.dtoList)
+      setItemLength(res?.data.dtoList.length)
     })
-  }, [corpData])
+  }, [])
 
   return (
     <>
@@ -29,15 +28,6 @@ export default function ItemList() {
             welfareList={el.welfareList}
           />
         ))}
-        {/* <CorpItem
-          corp_id={1}
-          name="우아한형제들"
-          image="https://media-exp1.licdn.com/dms/image/C560BAQFXeEWM-FoApw/company-logo_200_200/0/1519881499181?e=2147483647&v=beta&t=KM_FX6hrlfp-OCrbSa6qrckrxs_znCgT6oyrxEP_0RI"
-          stock={true}
-          good="201"
-          category="IT"
-          welfareList="welfareList"
-        /> */}
       </Items>
     </>
   )

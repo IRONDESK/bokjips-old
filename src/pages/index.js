@@ -1,15 +1,16 @@
 import styled from '@emotion/styled'
-import { COLOR } from '../constants'
 
 import FilterList from '../components/main/FilterList'
 import ItemList from '../components/main/ItemList'
+import { useState } from 'react'
 
 export default function Home() {
+  const [itemLength, setItemLength] = useState(0)
   return (
     <>
       <Wrap>
-        <FilterList />
-        <ItemList />
+        <FilterList itemLength={itemLength} />
+        <ItemList setItemLength={setItemLength} />
       </Wrap>
     </>
   )
