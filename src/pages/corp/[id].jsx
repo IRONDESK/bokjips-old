@@ -14,15 +14,16 @@ import MoreCorp from '../../components/company/MoreCorp'
 
 export default function Home() {
   const router = useRouter()
-  const corpId = router.query.id
+  const corp_id = router.query.id
+  const user_id = typeof window !== "undefined" ? sessionStorage.getItem("id") : ""
   const [data, setData] = useState()
   const [errorReportModal, setErrorReportModal] = useState(false)
 
   useEffect(() => {
-    axios.get(`http://52.79.165.66:8081/corp/select/${corpId}`).then((res) => {
+    axios.get(`http://52.79.165.66:8081/corp/select/${corp_id}/${user_id ? "" : user_id}`).then((res) => {
       setData(res?.data)
     })
-  }, [corpId])
+  }, [])
 
   return (
     <>
