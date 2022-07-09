@@ -1,12 +1,20 @@
 import React, { useState } from 'react'
+import styled from '@emotion/styled'
 import axios from 'axios'
 import Link from 'next/link'
-import { Title } from '../../components/layouts'
-
-import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { loginAccount } from '../../store/LoggedState'
 import { COLOR } from '../../constants'
 
+import { Title } from '../../components/layouts'
+import ModalAlert from '../../components/ModalAlert'
+
 export default function login() {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const [showAlert, setShowAlert] = useState(false)
   const [userInput, setUserInput] = useState({
     email: '',
     password: '',
@@ -27,8 +35,16 @@ export default function login() {
       )
       .then((res) => {
         const { token, name } = res.data
+        console.log('res', res.data)
+        dispatch(loginAccount())
         sessionStorage.setItem('token', token)
         sessionStorage.setItem('user_name', name)
+        router.push('/')
+      }).catch((res) => {
+        setShowAlert(true)
+        setTimeout(() => {
+          setShowAlert(false)
+        }, 3800)
       })
   }
 
@@ -64,6 +80,7 @@ export default function login() {
             <Link href="/user/join">회원가입</Link>
           </JoinHref>
         </Form>
+        {showAlert ? <ModalAlert typeError={true} text="아이디나 비밀번호를 확인해주세요." /> : null}
       </Container>
     </>
   )

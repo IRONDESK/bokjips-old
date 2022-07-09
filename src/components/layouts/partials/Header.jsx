@@ -1,8 +1,23 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+
 import styled from '@emotion/styled'
 import { COLOR } from '../../../constants'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutAccount } from '../../../store/LoggedState'
 
 export const Header = () => {
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const userInfo = useSelector((state) => state)
+
+  const Logout = () => {
+    dispatch(logoutAccount())
+    sessionStorage.removeItem("user_name")
+    sessionStorage.removeItem("token")
+    router.push('/')
+  }
+  
   return (
     <Container>
       <Nav>
@@ -14,12 +29,22 @@ export const Header = () => {
           </Title>
         </Link>
         <UserInfo>
-          <Item>
-            <Link href="/user/login">로그인</Link>
-          </Item>
-          <Item>
-            <Link href="/user/join">회원가입</Link>
-          </Item>
+          {userInfo.LoggedState.logged ? (
+            <>
+              <Item>{userInfo.LoggedState.user_name} 님, 안녕하세요</Item>
+              <Item onClick={Logout} style={{cursor: 'pointer'}}>로그아웃</Item>
+            </>
+          ) : (
+          <>
+            <Item>
+              <Link href="/user/login">로그인</Link>
+            </Item>
+            <Item>
+              <Link href="/user/join">회원가입</Link>
+            </Item>
+          </>
+          )
+        }
         </UserInfo>
       </Nav>
     </Container>
@@ -28,11 +53,19 @@ export const Header = () => {
 
 const Container = styled.header`
   border-bottom: 1px solid ${COLOR.gray};
+  @media (max-width: 1024px) {
+    padding: 0 30px;
+  }
+
 `
 const Nav = styled.nav`
   position: relative;
   margin: 25px auto 10px auto;
   max-width: 1024px;
+  @media (max-width: 768px) {
+    display: flex;
+    margin: 20px auto 12px auto;
+  } ;
 `
 
 const Title = styled.h1`
@@ -48,6 +81,13 @@ const Title = styled.h1`
   strong {
     color: ${COLOR.main};
   }
+  @media (max-width: 768px) {
+    margin: 0;
+    padding: 0;
+    font-size: 26px;
+    text-align: left;
+    line-height: 26px;
+  } ;
 `
 
 const UserInfo = styled.ul`
