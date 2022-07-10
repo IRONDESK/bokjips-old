@@ -1,29 +1,36 @@
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import axios from 'axios'
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
 
-import styled from '@emotion/styled'
-import { COLOR } from '../../constants'
+import styled from "@emotion/styled";
+import { COLOR } from "../../constants";
 
-import { Title } from '../../components/layouts'
-import Comments from '../../components/company/Comments'
-import InfoBanner from '../../components/company/InfoBanner'
-import Detail from '../../components/company/Detail'
-import ErrorReport from '../../components/company/ErrorReport'
-import MoreCorp from '../../components/company/MoreCorp'
+import { Title } from "../../components/layouts";
+import Comments from "../../components/company/Comments";
+import InfoBanner from "../../components/company/InfoBanner";
+import Detail from "../../components/company/Detail";
+import ErrorReport from "../../components/company/ErrorReport";
+import MoreCorp from "../../components/company/MoreCorp";
 
 export default function Home() {
-  const router = useRouter()
-  const corp_id = router.query.id
-  const user_id = typeof window !== "undefined" ? sessionStorage.getItem("id") : ""
-  const [data, setData] = useState()
-  const [errorReportModal, setErrorReportModal] = useState(false)
+  const router = useRouter();
+  const corp_id = router.query.id;
+  const user_id =
+    typeof window !== "undefined" ? sessionStorage.getItem("id") : "";
+  const [data, setData] = useState();
+  const [errorReportModal, setErrorReportModal] = useState(false);
 
   useEffect(() => {
-    axios.get(`http://52.79.165.66:8081/corp/select/${corp_id}/${user_id ? "" : user_id}`).then((res) => {
-      setData(res?.data)
-    })
-  }, [])
+    axios
+      .get(
+        `http://52.79.165.66:8081/corp/select/${corp_id}/${
+          user_id ? "" : user_id
+        }`
+      )
+      .then((res) => {
+        setData(res?.data);
+      });
+  }, []);
 
   return (
     <>
@@ -41,27 +48,27 @@ export default function Home() {
         <Details>
           {data ? (
             <>
-              <Detail kind="condition" data={data?.welfareList?.condition} />
+              <Detail kind='condition' data={data?.welfareList?.condition} />
               <Detail
-                kind="worksupport"
+                kind='worksupport'
                 data={data?.welfareList?.worksupport}
               />
-              <Detail kind="support" data={data?.welfareList?.support} />
+              <Detail kind='support' data={data?.welfareList?.support} />
               <Detail
-                kind="environment"
+                kind='environment'
                 data={data?.welfareList?.environment}
               />
-              <Detail kind="etc" data={data?.welfareList?.etc} />
+              <Detail kind='etc' data={data?.welfareList?.etc} />
             </>
           ) : null}
         </Details>
         <ReportBtn
-          type="button"
+          type='button'
           onClick={() => {
-            setErrorReportModal(true)
+            setErrorReportModal(true);
           }}
         >
-          <span className="material-icons">priority_high</span>
+          <span className='material-icons'>priority_high</span>
           오류 수정 요청
         </ReportBtn>
         <ErrorReport
@@ -74,7 +81,7 @@ export default function Home() {
       <Comments />
       <MoreCorp />
     </>
-  )
+  );
 }
 
 const Contents = styled.main`
@@ -83,7 +90,7 @@ const Contents = styled.main`
   @media (max-width: 1024px) {
     padding: 0 30px;
   } ;
-`
+`;
 
 const Details = styled.section`
   display: grid;
@@ -93,7 +100,7 @@ const Details = styled.section`
     display: flex;
     flex-direction: column;
   } ;
-`
+`;
 
 const ReportBtn = styled.button`
   display: flex;
@@ -111,4 +118,4 @@ const ReportBtn = styled.button`
     font-size: inherit;
     border-radius: 100%;
   }
-`
+`;
