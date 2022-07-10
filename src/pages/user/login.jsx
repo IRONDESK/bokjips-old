@@ -43,7 +43,7 @@ export default function login() {
         setShowAlert(true)
         setTimeout(() => {
           setShowAlert(false)
-        }, 3800)
+        }, 3000)
       })
   }
 

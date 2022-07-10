@@ -27,7 +27,7 @@ export default function DetailForm({ kind, formRegister }) {
       setShowAlert(true)
       setTimeout(() => {
         setShowAlert(false)
-      }, 3800)
+      }, 3000)
     }
   }
   return (
