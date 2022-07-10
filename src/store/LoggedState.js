@@ -8,9 +8,8 @@ export const LoggedState = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    loginAccount(state) {
-        const user_name = typeof window !== "undefined" ? sessionStorage.getItem("user_name") : null
-        return {logged: true, user_name: user_name }
+    loginAccount(state, username) {
+        return {logged: true, user_name: username.payload }
     },
     logoutAccount(state) {
         state.logged = false
