@@ -10,14 +10,12 @@ import TopForm from '../../components/company/write/TopForm'
 import BottomForm from '../../components/company/write/BottomForm'
 
 export default function write() {
-  // useForm Handle
-  const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTU0NDQ2NjgsImV4cCI6MTY1NTYxNzQ2OCwic3ViIjoiYm9ramlwcyJ9.wS5ynA-X00udTuuOaTzEBbzQV1KzcTnqt3rCzS_S8IY'
   const { register, handleSubmit } = useForm({
     mode: 'onSubmit',
   })
   const onSubmit = (data) => {
     console.log('Data: ', data)
+    const token = typeof window !== "undefined" ? sessionStorage.getItem("token") : "";
     axios
       .post('http://52.79.165.66:8081/corp/insert', JSON.stringify(data), {
         headers: {
