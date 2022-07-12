@@ -1,35 +1,35 @@
-import React, { useState } from 'react'
-import styled from '@emotion/styled'
-import { keyframes } from '@emotion/react'
-import { COLOR } from '../constants'
+import React, { useState } from "react";
+import styled from "@emotion/styled";
+import { keyframes } from "@emotion/react";
+import { COLOR } from "../constants";
 
 function ModalAlert({ typeError, text }) {
   return (
     <Wrap>
       <Message typeColor={typeError}>
-        <span className="material-icons">
-          {typeError ? 'priority_high' : 'check'}
+        <span className='material-icons'>
+          {typeError ? "priority_high" : "check"}
         </span>
         {text}
       </Message>
     </Wrap>
-  )
+  );
 }
 
 const Popup = keyframes`
     0% {
-        bottom: -100%;
+        bottom: -10%;
     }
-    20% {
+    8% {
         bottom: 40px;
     }
-    80% {
+    90% {
         bottom: 40px;
     }
     100% {
-        bottom : -100%;
+        bottom : -10%;
     }
-`
+`;
 
 const Wrap = styled.article`
   position: fixed;
@@ -44,9 +44,9 @@ const Wrap = styled.article`
   transform: translateX(-50%);
   border-radius: 10px;
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
-  animation: ${Popup} 4s linear forwards;
-  transition: 0.5s bottom;
-`
+  animation: ${Popup} 3s linear forwards;
+  transition: bottom 0.5s;
+`;
 const Message = styled.p`
   display: flex;
   align-items: center;
@@ -62,6 +62,6 @@ const Message = styled.p`
     font-size: inherit;
     border-radius: 100%;
   }
-`
+`;
 
-export default ModalAlert
+export default ModalAlert;

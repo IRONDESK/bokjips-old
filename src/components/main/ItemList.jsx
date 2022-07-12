@@ -1,46 +1,43 @@
-import { useState, useEffect } from 'react'
-import styled from '@emotion/styled'
-import axios from 'axios'
-import { COLOR } from '../../constants'
+import { useState, useEffect } from "react";
+import styled from "@emotion/styled";
+import axios from "axios";
 
-import CorpItem from './CorpItem'
+import CorpItem from "./CorpItem";
 
-export default function ItemList() {
-  const [corpData, setCorpData] = useState()
+export default function ItemList({ setItemLength }) {
+  const [corpData, setCorpData] = useState();
   useEffect(() => {
-    axios.get('http://52.79.165.66:8081/corp/select').then((res) => {
-      // console.log(res.data.dtoList)
-      setCorpData(res?.data.dtoList)
-    })
-  }, [corpData])
+    axios.get("http://52.79.165.66:8081/corp/select").then((res) => {
+      setCorpData(res?.data.dtoList);
+      setItemLength(res?.data.dtoList.length);
+    });
+  }, []);
 
   return (
     <>
-      <Items>
-        {corpData?.map((el) => (
-          <CorpItem
-            key={el.corp_id}
-            corp_id={el.corp_id}
-            name={el.name}
-            image={el.image}
-            stock={el.stock}
-            good={el.good}
-            category={el.category}
-            welfareList={el.welfareList}
-          />
-        ))}
-        {/* <CorpItem
-          corp_id={1}
-          name="우아한형제들"
-          image="https://media-exp1.licdn.com/dms/image/C560BAQFXeEWM-FoApw/company-logo_200_200/0/1519881499181?e=2147483647&v=beta&t=KM_FX6hrlfp-OCrbSa6qrckrxs_znCgT6oyrxEP_0RI"
-          stock={true}
-          good="201"
-          category="IT"
-          welfareList="welfareList"
-        /> */}
-      </Items>
+      {corpData ? (
+        <Items>
+          {corpData?.map((el) => (
+            <CorpItem
+              key={el.corp_id}
+              corp_id={el.corp_id}
+              name={el.name}
+              image={el.image}
+              stock={el.stock}
+              good={el.good}
+              category={el.category}
+              welfareList={el.welfareList}
+            />
+          ))}
+        </Items>
+      ) : (
+        <NoDataSection>
+          <p className='material-icons'>search_off</p>
+          검색된 회사가 없습니다
+        </NoDataSection>
+      )}
     </>
-  )
+  );
 }
 
 const Items = styled.section`
@@ -54,4 +51,14 @@ const Items = styled.section`
     display: flex;
     flex-direction: column;
   } ;
-`
+`;
+
+const NoDataSection = styled.section`
+  margin: 120px 0%;
+  text-align: center;
+  p {
+    display: block;
+    margin: 20px 0;
+    font-size: 64px;
+  }
+`;

@@ -1,6 +1,6 @@
-import Link from 'next/link'
-import styled from '@emotion/styled'
-import { COLOR } from '../../constants'
+import Link from "next/link";
+import styled from "@emotion/styled";
+import { COLOR } from "../../constants";
 
 export default function InfoBanner({
   name,
@@ -21,14 +21,14 @@ export default function InfoBanner({
           <Info>
             <CorpName>{name}</CorpName>
             <Category>
-              {stock ? '상장' : '비상장'} • {category}
+              {stock ? "상장" : "비상장"} • {category}
             </Category>
           </Info>
           <Good>
             <GoodBtn
-              type="button"
+              type='button'
               onClick={() => {
-                alert('좋아요 클릭')
+                alert("좋아요 클릭");
               }}
             >
               ♥{good}
@@ -51,13 +51,13 @@ export default function InfoBanner({
         </BtnWrap>
       </BtnContainer>
     </>
-  )
+  );
 }
 
 const Container = styled.section`
   width: 100%;
   background-color: ${COLOR.main};
-`
+`;
 
 const Wrap = styled.article`
   position: relative;
@@ -65,7 +65,7 @@ const Wrap = styled.article`
   max-width: 1100px;
   height: 120px;
   overflow: hidden;
-`
+`;
 
 const Logo = styled.div`
   display: flex;
@@ -89,7 +89,7 @@ const Logo = styled.div`
     border-radius: 15px;
     object-fit: cover;
   }
-`
+`;
 const Info = styled.div`
   display: flex;
   margin: 0 auto;
@@ -99,7 +99,7 @@ const Info = styled.div`
   width: 560px;
   height: 100%;
   text-align: center;
-`
+`;
 const Good = styled.div`
   position: absolute;
   top: 50%;
@@ -110,7 +110,7 @@ const Good = styled.div`
   border-radius: 100%;
   transform: translate(0, -50%);
   overflow: hidden;
-`
+`;
 const GoodBtn = styled.button`
   width: 100%;
   color: #fff;
@@ -122,27 +122,27 @@ const GoodBtn = styled.button`
     color: ${COLOR.main};
     transition: 0.3s background-color;
   }
-`
+`;
 
 const Category = styled.span`
   color: #fff;
   font-size: 17px;
   font-weight: 600;
-`
+`;
 const CorpName = styled.h3`
   margin: 7px 0;
   color: #fff;
   font-size: 37px;
   font-weight: 700;
-`
+`;
 const BtnContainer = styled.section`
-  background-color: ${'rgba(' + COLOR.mainrgb + ', .6)'};
-`
+  background-color: ${"rgba(" + COLOR.mainrgb + ", .6)"};
+`;
 const BtnWrap = styled.article`
   display: flex;
   margin: 0 auto;
   max-width: 1100px;
-`
+`;
 const LinkBtn = styled.button`
   display: block;
   padding: 10px 0;
@@ -153,4 +153,4 @@ const LinkBtn = styled.button`
     background-color: ${COLOR.main};
     color: #fff;
   }
-`
+`;
