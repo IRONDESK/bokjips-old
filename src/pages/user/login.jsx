@@ -34,8 +34,8 @@ export default function login() {
         { headers: { "Content-Type": `application/json` } }
       )
       .then((res) => {
-        const { token, name } = res.data;
-        dispatch(loginAccount(name));
+        const { token, name, user_id } = res.data;
+        dispatch(loginAccount({ user_name: name, user_id }));
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("user_name", name);
         router.push("/");
