@@ -72,7 +72,7 @@
 
 #### 2.1 개발 환경
 
-- 프론트엔드 : React & Next.js, JavaScript, @emotion
+- 프론트엔드 : React & Next.js, JavaScript, @emotion, Redux-toolkit
 - 백엔드 : Spring, MySQL, AWSS3
 - 배포 : LightSail, docker
 
@@ -102,6 +102,8 @@ filetree 삽입 예정
 
 
 ## 🎍 주요 페이지 UI <a id="chapter-4"></a>
+<img width="600" alt="스크린샷 2022-07-20 오전 1 05 00" src="https://user-images.githubusercontent.com/87234410/179797505-d8a585c3-85a2-478d-9e4d-bf3b38d0259b.png">
+
 
 ## 🥪 개발하며 느낀점 <a id="chapter-5"></a>
 
