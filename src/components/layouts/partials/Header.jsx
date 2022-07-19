@@ -13,8 +13,6 @@ export const Header = () => {
 
   const Logout = () => {
     dispatch(logoutAccount());
-    sessionStorage.removeItem("user_name");
-    sessionStorage.removeItem("token");
     router.push("/");
   };
 
