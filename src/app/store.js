@@ -1,8 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+
 import LoggedState from "../store/LoggedState";
 
+const rootReducer = combineReducers({
+  logged: LoggedState,
+});
+
 export const store = configureStore({
-  reducer: {
-    LoggedState,
-  },
+  reducer: rootReducer,
 });

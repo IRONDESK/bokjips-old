@@ -29,9 +29,9 @@ export const Header = () => {
           </Title>
         </Link>
         <UserInfo>
-          {userInfo.LoggedState.logged ? (
+          {userInfo.logged.isLogged ? (
             <>
-              <Item>{userInfo.LoggedState.user_name} 님, 안녕하세요</Item>
+              <Item>{userInfo.logged.user_name} 님, 안녕하세요</Item>
               <Item onClick={Logout} style={{ cursor: "pointer" }}>
                 로그아웃
               </Item>
