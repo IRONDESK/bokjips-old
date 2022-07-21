@@ -18,16 +18,16 @@ function ModalAlert({ typeError, text }) {
 
 const Popup = keyframes`
     0% {
-        bottom: -10%;
+        bottom: -6%;
     }
     8% {
         bottom: 40px;
     }
-    90% {
+    95% {
         bottom: 40px;
     }
     100% {
-        bottom : -10%;
+        bottom : -6%;
     }
 `;
 
@@ -44,7 +44,7 @@ const Wrap = styled.article`
   transform: translateX(-50%);
   border-radius: 10px;
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
-  animation: ${Popup} 3s linear forwards;
+  animation: ${Popup} 1.6s linear forwards;
   transition: bottom 0.5s;
 `;
 const Message = styled.p`
