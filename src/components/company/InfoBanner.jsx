@@ -1,55 +1,105 @@
+import { useState } from "react";
 import Link from "next/link";
+import axios from "axios";
+import useSWR, { useSWRConfig } from "swr";
+
 import styled from "@emotion/styled";
 import { COLOR } from "../../constants";
+import { useSelector } from "react-redux";
 
-export default function InfoBanner({
-  name,
-  site,
-  career,
-  category,
-  stock,
-  good,
-  image,
-}) {
+import ModalAlert from "../ModalAlert";
+
+function PlusGood(userInfo, corpId, setAlertMsg, setGoodAlert, mutate) {
+  if (userInfo.logged.isLogged) {
+    axios
+      .post("http://52.79.165.66:8081/corp/good", {
+        user_id: userInfo.logged.user_id,
+        corp_id: corpId,
+      })
+      .then((res) => {
+        if (res.data.substr(-2) == "등록") {
+          setAlertMsg("이 회사를 즐겨찾기에 등록했습니다.");
+        } else {
+          setAlertMsg("이 회사를 즐겨찾기에서 삭제했습니다.");
+        }
+        setGoodAlert(true);
+        setTimeout(() => {
+          setGoodAlert(false);
+        }, 2500);
+        // 뮤테이션 갱신
+        mutate(
+          `http://52.79.165.66:8081/corp/select/${corpId}/${
+            userInfo.logged.user_id ?? "user"
+          }`
+        );
+      });
+  } else {
+    setAlertMsg("로그인 후 사용 가능합니다.");
+    setGoodAlert(true);
+    setTimeout(() => {
+      setGoodAlert(false);
+    }, 2500);
+  }
+}
+
+export default function InfoBanner({ corpId }) {
+  const [goodAlert, setGoodAlert] = useState(false);
+  const [AlertMsg, setAlertMsg] = useState("");
+
+  const userInfo = useSelector((state) => state);
+  const { mutate } = useSWRConfig();
+  const { data } = useSWR(
+    `http://52.79.165.66:8081/corp/select/${corpId}/${
+      userInfo.logged.user_id ?? "user"
+    }`,
+    (...args) => fetch(...args).then((res) => res.json())
+  );
+
   return (
     <>
       <Container>
         <Wrap>
           <Logo>
-            <img src={image} />
+            <img src={data?.image} />
           </Logo>
           <Info>
-            <CorpName>{name}</CorpName>
+            <CorpName>{data?.name}</CorpName>
             <Category>
-              {stock ? "상장" : "비상장"} • {category}
+              {data?.stock ? "상장" : "비상장"} • {data?.category}
             </Category>
           </Info>
           <Good>
             <GoodBtn
               type='button'
               onClick={() => {
-                alert("좋아요 클릭");
+                PlusGood(userInfo, corpId, setAlertMsg, setGoodAlert, mutate);
               }}
             >
-              ♥{good}
+              ♥{data?.good}
             </GoodBtn>
           </Good>
         </Wrap>
       </Container>
       <BtnContainer>
         <BtnWrap>
-          {site ? (
-            <Link href={site}>
+          {data?.site ? (
+            <Link href={data?.site}>
               <LinkBtn>기업 사이트 이동</LinkBtn>
             </Link>
           ) : null}
-          {career ? (
-            <Link href={career}>
+          {data?.career ? (
+            <Link href={data?.career}>
               <LinkBtn>채용정보 보기</LinkBtn>
             </Link>
           ) : null}
         </BtnWrap>
       </BtnContainer>
+      {goodAlert ? (
+        <ModalAlert
+          typeError={userInfo.logged.isLogged ? false : true}
+          text={AlertMsg}
+        />
+      ) : null}
     </>
   );
 }
