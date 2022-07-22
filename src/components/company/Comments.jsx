@@ -48,7 +48,7 @@ export default function Comments({ commentCount = 0 }) {
 const Container = styled.section`
   margin: 0 auto;
   padding: 25px 30px;
-  max-width: 1000px;
+  width: 100%;
   min-height: 260px;
   box-shadow: 0 0 8px 5px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
