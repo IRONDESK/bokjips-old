@@ -27,53 +27,59 @@ export default function Home() {
   return (
     <>
       <Title title={data?.name} />
-      <InfoBanner corpId={corp_id} />
-      <Contents>
-        <Details>
-          {data ? (
-            <>
-              <Detail kind='condition' data={data?.welfareList?.condition} />
-              <Detail
-                kind='worksupport'
-                data={data?.welfareList?.worksupport}
-              />
-              <Detail kind='support' data={data?.welfareList?.support} />
-              <Detail
-                kind='environment'
-                data={data?.welfareList?.environment}
-              />
-              <Detail kind='etc' data={data?.welfareList?.etc} />
-            </>
-          ) : null}
-        </Details>
-        <ReportBtn
-          type='button'
-          onClick={() => {
-            setErrorReportModal(true);
-          }}
-        >
-          <span className='material-icons'>priority_high</span>
-          오류 수정 요청
-        </ReportBtn>
-        <ErrorReport
-          corpId={0}
-          corpName={data?.name}
-          view={errorReportModal}
-          setView={setErrorReportModal}
-        />
-      </Contents>
+      <Main>
+        <InfoBanner corpId={corp_id} />
+        <Contents>
+          <Details>
+            {data ? (
+              <>
+                <Detail kind='condition' data={data?.welfareList?.condition} />
+                <Detail
+                  kind='worksupport'
+                  data={data?.welfareList?.worksupport}
+                />
+                <Detail kind='support' data={data?.welfareList?.support} />
+                <Detail
+                  kind='environment'
+                  data={data?.welfareList?.environment}
+                />
+                <Detail kind='etc' data={data?.welfareList?.etc} />
+              </>
+            ) : null}
+          </Details>
+          <ReportBtn
+            type='button'
+            onClick={() => {
+              setErrorReportModal(true);
+            }}
+          >
+            <span className='material-icons'>priority_high</span>
+            오류 수정 요청
+          </ReportBtn>
+          <ErrorReport
+            corpId={0}
+            corpName={data?.name}
+            view={errorReportModal}
+            setView={setErrorReportModal}
+          />
+        </Contents>
+      </Main>
       <Comments />
       <MoreCorp />
     </>
   );
 }
 
-const Contents = styled.main`
-  margin: 40px auto;
-  max-width: 1024px;
-  @media (max-width: 1024px) {
-    padding: 0 30px;
+const Main = styled.main`
+  display: flex;
+  @media (max-width: 640px) {
+    flex-direction: column;
   } ;
+`;
+const Contents = styled.section`
+  flex: 3;
+  padding: 35px;
+  max-width: 1024px;
 `;
 
 const Details = styled.section`

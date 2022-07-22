@@ -3,6 +3,7 @@ export const COLOR = {
   mainrgb: "0, 96, 209",
   border: "#f7f7f7",
   gray: "#E3E3E3",
+  graybg: "#f2f2f2",
   darkgray: "#777",
   report: "#ff3d00",
   reportrgb: "255, 61, 0",

@@ -30,11 +30,11 @@ export default function Detail({ kind, data }) {
 const Container = styled.article`
   padding: 23px;
   border-radius: 10px;
-  border: 3px solid ${COLOR.gray};
+  border: 1px solid ${COLOR.gray};
 `;
 const Title = styled.h4`
-  font-weight: 700;
-  font-size: 23px;
+  font-weight: 600;
+  font-size: 20px;
 `;
 
 const List = styled.ul`
@@ -46,14 +46,14 @@ const SubList = styled.li`
 const SubTitle = styled.span`
   display: inline-block;
   margin-right: 7px;
-  padding: 6px 8px;
+  padding: 8px 12px;
   background-color: ${(props) => props.color};
   color: #fff;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 500;
-  border-radius: 15px;
+  border-radius: 20px;
 `;
 const OptionTxt = styled.span`
   color: ${(props) => props.color};
-  font-size: 17px;
+  font-size: 16px;
 `;
