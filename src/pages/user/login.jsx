@@ -35,7 +35,7 @@ export default function login() {
       )
       .then((res) => {
         const { token, name, user_id } = res.data;
-        dispatch(loginAccount({ user_name: name, user_id }));
+        dispatch(loginAccount({ user_name: name, user_id, token }));
         router.push("/");
       })
       .catch((res) => {
