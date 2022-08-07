@@ -65,7 +65,11 @@ export default function Home() {
         </Contents>
       </Main>
       <Comments />
-      <MoreCorp />
+      <MoreCorp
+        corpId={corp_id}
+        category={data?.category}
+        stock={data?.stock}
+      />
     </>
   );
 }
@@ -77,9 +81,11 @@ const Main = styled.main`
   } ;
 `;
 const Contents = styled.section`
-  flex: 3;
-  padding: 35px;
-  max-width: 1024px;
+  flex: 3.8;
+  padding: 28px;
+  @media (max-width: 640px) {
+    padding: 20px;
+  } ;
 `;
 
 const Details = styled.section`
