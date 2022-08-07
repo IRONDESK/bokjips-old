@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
+
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { COLOR } from "../../constants";
@@ -6,18 +7,21 @@ import axios from "axios";
 
 export default function MoreCorp({ corpId, category, stock }) {
   const [MoreCorp, setMoreCorp] = useState();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     axios
       .post("http://52.79.165.66:8081/corp/select/mini", {
         corp_id: corpId ?? 1,
-        category: category ?? ["category"],
+        category: category ?? [""],
         stock: stock ?? false,
       })
-      .then((res) => {
-        setMoreCorp(res?.data);
-      });
-  }, [MoreCorp]);
+      .then((res) => setMoreCorp(res?.data));
+  }, [isLoaded]);
+
+  setTimeout(() => {
+    setIsLoaded(true);
+  }, 200);
 
   return (
     <Container>
