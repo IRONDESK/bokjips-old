@@ -4,6 +4,7 @@ export const COLOR = {
   border: "#f7f7f7",
   gray: "#E3E3E3",
   graybg: "#f2f2f2",
+  graybg2: "#a3a3a3",
   darkgray: "#777",
   report: "#ff3d00",
   reportrgb: "255, 61, 0",
