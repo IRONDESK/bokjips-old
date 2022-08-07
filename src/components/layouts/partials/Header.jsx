@@ -19,6 +19,34 @@ export const Header = () => {
   return (
     <Container>
       <Nav>
+        <UserInfo>
+          {userInfo.logged.isLogged ? (
+            <>
+              <Item isButton={false}>
+                {userInfo.logged.user_name} 님, 안녕하세요
+              </Item>
+              <Item isButton={true}>
+                <Link href='/corp/write'>복지정보 작성</Link>
+              </Item>
+              <Item
+                isButton={true}
+                onClick={Logout}
+                style={{ cursor: "pointer" }}
+              >
+                로그아웃
+              </Item>
+            </>
+          ) : (
+            <>
+              <Item isButton={true}>
+                <Link href='/user/login'>로그인</Link>
+              </Item>
+              <Item isButton={true}>
+                <Link href='/user/join'>회원가입</Link>
+              </Item>
+            </>
+          )}
+        </UserInfo>
         <Link href='/'>
           <Title>
             <strong>복지</strong>
@@ -26,25 +54,6 @@ export const Header = () => {
             편살
           </Title>
         </Link>
-        <UserInfo>
-          {userInfo.logged.isLogged ? (
-            <>
-              <Item>{userInfo.logged.user_name} 님, 안녕하세요</Item>
-              <Item onClick={Logout} style={{ cursor: "pointer" }}>
-                로그아웃
-              </Item>
-            </>
-          ) : (
-            <>
-              <Item>
-                <Link href='/user/login'>로그인</Link>
-              </Item>
-              <Item>
-                <Link href='/user/join'>회원가입</Link>
-              </Item>
-            </>
-          )}
-        </UserInfo>
       </Nav>
     </Container>
   );
@@ -52,18 +61,9 @@ export const Header = () => {
 
 const Container = styled.header`
   border-bottom: 1px solid ${COLOR.gray};
-  @media (max-width: 1024px) {
-    padding: 0 30px;
-  }
 `;
 const Nav = styled.nav`
-  position: relative;
-  margin: 25px auto 10px auto;
-  max-width: 1024px;
-  @media (max-width: 768px) {
-    display: flex;
-    margin: 20px auto 12px auto;
-  } ;
+  padding: 16px;
 `;
 
 const Title = styled.h1`
@@ -72,10 +72,10 @@ const Title = styled.h1`
   padding: 10px 0 0 0;
   width: 100px;
   font-weight: 800;
-  font-size: 45px;
+  font-size: 40px;
   font-family: "GangwonEdu";
   text-align: center;
-  line-height: 40px;
+  line-height: 35px;
   strong {
     color: ${COLOR.main};
   }
@@ -89,12 +89,13 @@ const Title = styled.h1`
 `;
 
 const UserInfo = styled.ul`
-  position: absolute;
+  float: right;
   display: flex;
-  top: 0;
-  right: 0;
   gap: 0 13px;
 `;
 const Item = styled.li`
   font-size: 14px;
+  &:hover {
+    color: ${(props) => (props.isButton ? COLOR.main : "none")};
+  }
 `;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
@@ -10,17 +11,16 @@ import TopForm from "../../components/company/write/TopForm";
 import BottomForm from "../../components/company/write/BottomForm";
 
 export default function write() {
+  const userInfo = useSelector((state) => state);
   const { register, handleSubmit } = useForm({
-    mode: "onSubmit",
+    mode: "onBlur",
   });
   const onSubmit = (data) => {
     console.log("Data: ", data);
-    const token =
-      typeof window !== "undefined" ? sessionStorage.getItem("token") : "";
     axios
       .post("http://52.79.165.66:8081/corp/insert", JSON.stringify(data), {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${userInfo?.logged.token}`,
           "Content-Type": `application/json`,
         },
       })
@@ -33,13 +33,20 @@ export default function write() {
     <>
       <Title title='새 회사 추가' />
       <Container>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <TopForm register={register} />
-          <BottomForm register={register} />
-          <Submit type='submit' className='material-icons'>
-            check
-          </Submit>
-        </Form>
+        {userInfo?.logged.isLogged ? (
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <TopForm register={register} />
+            <BottomForm register={register} />
+            <Submit type='submit' className='material-icons'>
+              check
+            </Submit>
+          </Form>
+        ) : (
+          <UnLoggedSection>
+            <p className='material-icons'>edit_off</p>
+            복지 정보를 게시하려면 로그인이 필요합니다.
+          </UnLoggedSection>
+        )}
       </Container>
     </>
   );
@@ -68,5 +75,15 @@ const Submit = styled.button`
     background-color: ${COLOR.main};
     border: 2px solid ${COLOR.main};
     color: #fff;
+  }
+`;
+
+const UnLoggedSection = styled.section`
+  margin: 160px 0%;
+  text-align: center;
+  p {
+    display: block;
+    margin: 20px 0;
+    font-size: 64px;
   }
 `;
