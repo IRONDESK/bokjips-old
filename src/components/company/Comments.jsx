@@ -1,14 +1,63 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import useSWR, { useSWRConfig } from "swr";
+import axios from "axios";
 
 import styled from "@emotion/styled";
 import { COLOR } from "../../constants";
 
-export default function Comments({ commentCount = 0 }) {
+export default function Comments() {
+  const router = useRouter();
+  const corp_id = router.query.id;
+  const userInfo = useSelector((state) => state);
+  const { mutate } = useSWRConfig();
+
+  const [commentText, setCommentText] = useState("");
   const [commentShow, setCommentShow] = useState(false);
+  const getCommentURL = `http://52.79.165.66:8081/comments/select/${corp_id}?page=1&size=10`;
+
+  const { data } = useSWR(getCommentURL, (...args) =>
+    fetch(...args).then((res) => res.json())
+  );
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        "http://52.79.165.66:8081/comments/insert",
+        JSON.stringify({
+          title: "제목2",
+          content: commentText,
+          user_id: userInfo.logged.user_id,
+          corp_id,
+        }),
+        {
+          headers: {
+            Authorization: `Bearer ${userInfo?.logged.token}`,
+            "Content-Type": `application/json`,
+          },
+        }
+      )
+      .then(() => {
+        mutate(getCommentURL);
+        setCommentText("");
+      });
+  };
+
+  const deleteComment = (comments_id) => {
+    const confirmDel = confirm("선택하신 댓글을 삭제하시겠습니까?");
+    if (confirmDel) {
+      axios
+        .delete(`http://52.79.165.66:8081/comments/delete/${comments_id}`)
+        .then(() => mutate(getCommentURL));
+    }
+  };
+
   return (
     <Container>
       <Nav>
-        <Title>댓글 {commentCount}개</Title>
+        <Title>댓글 {data?.dtoList.length}개</Title>
         <Write
           onClick={() => {
             setCommentShow(!commentShow);
@@ -18,29 +67,51 @@ export default function Comments({ commentCount = 0 }) {
           edit
         </Write>
       </Nav>
-      <InputForm show={commentShow}>
+      <InputForm onSubmit={onSubmit} show={commentShow}>
         {commentShow ? (
           <>
-            <Input type='text' placeholder='내용을 입력하세요.' />
+            <Input
+              type='text'
+              value={commentText}
+              onChange={(e) => {
+                setCommentText(e.target.value);
+              }}
+              placeholder='내용을 입력하세요.'
+            />
             <Submit type='submit' className='material-icons'>
               check
             </Submit>
           </>
         ) : null}
       </InputForm>
-      <Items>
-        <Item>
-          <p className='comment-text'>
-            이 회사의 장점은 어떻고요다니고 싶어요. 그렇습니다. 그래서 다녀야
-            합니다. 동해물과 백두산이 마르고 닳도록.
-            <button className='del-button'>[삭제]</button>
-          </p>
-          <ul className='comment-options'>
-            <li>작성자</li>
-            <li>작성일</li>
-          </ul>
-        </Item>
-      </Items>
+      <List>
+        {data
+          ? data?.dtoList.map((el, index) => (
+              <CommentItem key={index}>
+                <p>{el.content}</p>
+                <ul>
+                  <li>{el.regDate.split("T")[0]}</li>
+                  <li>
+                    <button
+                      className='material-icons'
+                      onClick={() => {
+                        deleteComment(el.comments_id);
+                      }}
+                    >
+                      delete_forever
+                    </button>
+                  </li>
+                </ul>
+              </CommentItem>
+            ))
+          : null}
+        {data?.dtoList.length == 0 ? (
+          <NoDataSection>
+            <p className='material-icons'>playlist_remove</p>
+            댓글이 없는 회사입니다. 첫 번째 댓글의 주인공이 되어주세요.
+          </NoDataSection>
+        ) : null}
+      </List>
     </Container>
   );
 }
@@ -104,42 +175,53 @@ const Submit = styled.button`
     color: ${COLOR.main};
   }
 `;
-const Items = styled.section`
-  margin: 20px 0 10px 0;
-`;
-const Item = styled.article`
+const List = styled.ul`
   display: flex;
-  padding: 10px 6px;
-  width: 100%;
+  margin: 20px 0 30px 0;
+  flex-direction: column;
+`;
+const CommentItem = styled.li`
+  display: flex;
+  padding: 8px 12px;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid ${COLOR.gray};
   &:last-child {
     border: none;
   }
-  .comment-text {
-    width: 85%;
-    line-height: 130%;
-    .del-button {
-      display: inline-block;
-    }
-    @media (max-width: 768px) {
-      width: 100%;
-    }
+  p {
+    flex: 3;
   }
-  .comment-options {
-    li {
-      display: inline;
-      margin: 0 4px;
-      font-size: 14px;
-    }
-    @media (max-width: 768px) {
-      margin: 4px 0 0 0;
-      text-align: right;
+  ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 0.45;
+    color: ${COLOR.darkgray};
+    font-size: 0.85rem;
+    button {
+      &:hover {
+        color: ${COLOR.main};
+      }
     }
   }
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-end;
+    gap: 4px;
+    p {
+      width: 100%;
+      text-align: left;
+    }
   } ;
+`;
+
+const NoDataSection = styled.section`
+  margin: 0 0 36px 0;
+  text-align: center;
+  p {
+    display: block;
+    margin: 20px 0;
+    font-size: 64px;
+  }
 `;
