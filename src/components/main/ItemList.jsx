@@ -3,21 +3,22 @@ import styled from "@emotion/styled";
 import axios from "axios";
 
 import CorpItem from "./CorpItem";
+import useSWR from "swr";
 
 export default function ItemList({ setItemLength }) {
-  const [corpData, setCorpData] = useState();
+  const { data, error } = useSWR(
+    "http://52.79.165.66:8081/corp/select",
+    (...args) => fetch(...args).then((res) => res.json())
+  );
   useEffect(() => {
-    axios.get("http://52.79.165.66:8081/corp/select").then((res) => {
-      setCorpData(res?.data.dtoList);
-      setItemLength(res?.data.dtoList.length);
-    });
-  }, []);
+    setItemLength(data?.dtoList.length);
+  }, [data]);
 
   return (
     <>
-      {corpData ? (
+      {data ? (
         <Items>
-          {corpData?.map((el) => (
+          {data?.dtoList.map((el) => (
             <CorpItem
               key={el.corp_id}
               corp_id={el.corp_id}
