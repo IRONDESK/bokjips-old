@@ -73,9 +73,10 @@ const Logo = styled.img`
   display: block;
   width: 66px;
   height: 66px;
+  background-color: #fff;
   border: 1px solid ${COLOR.gray};
-  object-fit: cover;
   border-radius: 100%;
+  object-fit: contain;
   @media (max-width: 1024px) {
     width: 40px;
     height: 40px;

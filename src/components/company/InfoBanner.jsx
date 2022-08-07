@@ -141,9 +141,10 @@ const Container = styled.section`
 const Logo = styled.img`
   width: 85px;
   height: 85px;
-  border-radius: 100%;
-  object-fit: cover;
+  background-color: #fff;
   border: 1px solid ${COLOR.gray};
+  border-radius: 100%;
+  object-fit: contain;
   @media (max-width: 640px) {
     width: 60px;
     height: 60px;
