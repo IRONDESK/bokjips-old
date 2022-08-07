@@ -16,13 +16,18 @@ export default function FilterList({ itemLength }) {
         <ItemAmount>
           총 <strong>{itemLength}개</strong>의 기업
         </ItemAmount>
-        <Search>
-          <SearchInput type='text' placeholder='기업명으로 검색' />
-          <i className='material-icons'>search</i>
-        </Search>
-        <FilterShowBtn type='button' onClick={() => setShowFilter(!showFilter)}>
-          <i className='material-icons'>filter_alt</i> 필터
-        </FilterShowBtn>
+        <Inputs>
+          <Search>
+            <SearchInput type='text' placeholder='기업명으로 검색' />
+            <i className='material-icons'>search</i>
+          </Search>
+          <FilterShowBtn
+            type='button'
+            onClick={() => setShowFilter(!showFilter)}
+          >
+            <i className='material-icons'>filter_alt</i> 필터
+          </FilterShowBtn>
+        </Inputs>
       </FilterNav>
       <FilterWrap show={showFilter} onClick={selectFilter}>
         {showFilter
@@ -49,6 +54,7 @@ const Container = styled.section`
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
   } ;
 `;
 
@@ -56,12 +62,23 @@ const FilterNav = styled.section`
   display: flex;
   align-items: center;
   gap: 16px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  } ;
+`;
+const Inputs = styled.article`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;
 const ItemAmount = styled.p`
   font-size: 15px;
   strong {
     font-weight: bold;
   }
+  @media (max-width: 768px) {
+    margin: 12px 0 0 0;
+  } ;
 `;
 
 const Search = styled.div`
@@ -88,6 +105,7 @@ const SearchInput = styled.input`
 const FilterShowBtn = styled.button`
   display: flex;
   padding: 8px 12px;
+  height: 36px;
   align-items: center;
   background-color: ${COLOR.main};
   color: #fff;
