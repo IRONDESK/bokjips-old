@@ -173,7 +173,7 @@ const Input = styled.input`
   @media (max-width: 768px) {
     width: 100%;
   }
-  &:nth-child(2) {
+  &:nth-of-type(2) {
     margin-right: 23px;
   }
 `;
