@@ -1,49 +1,68 @@
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import axios from 'axios'
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useForm, useFieldArray } from "react-hook-form";
+import axios from "axios";
 
-import styled from '@emotion/styled'
-import { COLOR } from '../../constants'
+import styled from "@emotion/styled";
+import { COLOR } from "../../constants";
 
-import { Title } from '../../components/layouts'
-import TopForm from '../../components/company/write/TopForm'
-import BottomForm from '../../components/company/write/BottomForm'
+import { Title } from "../../components/layouts";
+import TopForm from "../../components/company/write/TopForm";
+import BottomForm from "../../components/company/write/BottomForm";
 
-export default function write() {
-  // useForm Handle
-  const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTU0NDQ2NjgsImV4cCI6MTY1NTYxNzQ2OCwic3ViIjoiYm9ramlwcyJ9.wS5ynA-X00udTuuOaTzEBbzQV1KzcTnqt3rCzS_S8IY'
-  const { register, handleSubmit } = useForm({
-    mode: 'onSubmit',
-  })
+export default function Write() {
+  const userInfo = useSelector((state) => state);
+  const { register, handleSubmit, watch, control } = useForm({
+    mode: "onBlur",
+    defaultValues: {
+      welfareList: {
+        condition: [{}],
+        worksupport: [{}],
+        support: [{}],
+        environment: [{}],
+      },
+    },
+  });
+
   const onSubmit = (data) => {
-    console.log('Data: ', data)
+    console.log("Data: ", data);
     axios
-      .post('http://52.79.165.66:8081/corp/insert', JSON.stringify(data), {
+      .post("http://52.79.165.66:8081/corp/insert", JSON.stringify(data), {
         headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': `application/json`,
+          Authorization: `Bearer ${userInfo?.logged.token}`,
+          "Content-Type": `application/json`,
         },
       })
       .then((res) => {
-        console.log('res :', res)
-      })
-  }
+        console.log("res :", res);
+      });
+  };
 
   return (
     <>
-      <Title title="새 회사 추가" />
+      <Title title='새 회사 추가' />
       <Container>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <TopForm register={register} />
-          <BottomForm register={register} />
-          <Submit type="submit" className="material-icons">
-            check
-          </Submit>
-        </Form>
+        {userInfo?.logged.isLogged ? (
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <TopForm register={register} watch={watch} />
+            <BottomForm
+              register={register}
+              useFieldArray={useFieldArray}
+              control={control}
+            />
+            <Submit type='submit' className='material-icons'>
+              check
+            </Submit>
+          </Form>
+        ) : (
+          <UnLoggedSection>
+            <p className='material-icons'>edit_off</p>
+            복지 정보를 게시하려면 로그인이 필요합니다.
+          </UnLoggedSection>
+        )}
       </Container>
     </>
-  )
+  );
 }
 
 const Container = styled.main`
@@ -52,11 +71,11 @@ const Container = styled.main`
   @media (max-width: 1024px) {
     padding: 0 30px;
   } ;
-`
-const Form = styled.form``
+`;
+const Form = styled.form``;
 
 const Submit = styled.button`
-  /* cursor: ${(prop) => (prop.disabled ? 'not-allowed' : 'pointer')}; */
+  /* cursor: ${(prop) => (prop.disabled ? "not-allowed" : "pointer")}; */
   display: block;
   margin: 35px auto;
   width: 55px;
@@ -70,4 +89,14 @@ const Submit = styled.button`
     border: 2px solid ${COLOR.main};
     color: #fff;
   }
-`
+`;
+
+const UnLoggedSection = styled.section`
+  margin: 160px 0%;
+  text-align: center;
+  p {
+    display: block;
+    margin: 20px 0;
+    font-size: 64px;
+  }
+`;

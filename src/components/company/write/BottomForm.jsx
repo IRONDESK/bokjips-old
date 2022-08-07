@@ -1,20 +1,45 @@
-import React from 'react'
+import React from "react";
 
-import styled from '@emotion/styled'
-import { COLOR } from '../../../constants'
+import styled from "@emotion/styled";
+import { COLOR } from "../../../constants";
 
-import Detail from './DetailForm'
+import Detail from "./DetailForm";
 
-export default function BottomForm({ register }) {
+export default function BottomForm({ register, control, useFieldArray }) {
   return (
     <Bottom>
-      <Detail kind="condition" formRegister={register} />
-      <Detail kind="worksupport" formRegister={register} />
-      <Detail kind="support" formRegister={register} />
-      <Detail kind="environment" formRegister={register} />
-      <Detail kind="etc" formRegister={register} />
+      <Detail
+        kind='condition'
+        formRegister={register}
+        control={control}
+        useFieldArray={useFieldArray}
+      />
+      <Detail
+        kind='worksupport'
+        formRegister={register}
+        control={control}
+        useFieldArray={useFieldArray}
+      />
+      <Detail
+        kind='support'
+        formRegister={register}
+        control={control}
+        useFieldArray={useFieldArray}
+      />
+      <Detail
+        kind='environment'
+        formRegister={register}
+        control={control}
+        useFieldArray={useFieldArray}
+      />
+      <Detail
+        kind='etc'
+        formRegister={register}
+        control={control}
+        useFieldArray={useFieldArray}
+      />
     </Bottom>
-  )
+  );
 }
 
 const Bottom = styled.section`
@@ -25,4 +50,4 @@ const Bottom = styled.section`
     display: flex;
     flex-direction: column;
   } ;
-`
+`;

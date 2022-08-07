@@ -1,55 +1,70 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from "react";
 
-import styled from '@emotion/styled'
-import { COLOR } from '../../../constants'
+import styled from "@emotion/styled";
+import { COLOR } from "../../../constants";
 
-function TopForm({ register }) {
-  const [selectedCategory, setselectedCategory] = useState('카테고리')
+function TopForm({ register, watch }) {
+  const [selectedCategory, setselectedCategory] = useState("카테고리");
+  // const imageValue = watch("image");
+  // const [imgPreview, setImgPreview] = useState("");
   const categories = [
-    'IT/플랫폼',
-    '유통',
-    '게임',
-    '건강/바이오',
-    '금융',
-    '문화',
-    '기타',
-  ]
+    "IT/플랫폼",
+    "유통",
+    "게임",
+    "건강/바이오",
+    "금융",
+    "문화",
+    "기타",
+  ];
   const SelectCategory = (e) => {
     if (e.target.value) {
-      setselectedCategory(e.target.value)
+      setselectedCategory(e.target.value);
     }
-  }
+  };
+
+  // useEffect(() => {
+  //   if (imageValue && imageValue.length > 0) {
+  //     const file = imageValue[0];
+  //     setImgPreview(URL.createObjectURL(file));
+  //   }
+  // }, [imageValue]);
+
   return (
     <Container>
       <ImgInput
-        // type="file"
-        id="img-attach"
-        {...register('image')}
+        // type='file'
+        // accept='image/*'
+        id='img-attach'
+        // {...register("image", { setvalue: (value) => value[0] })}
       />
-      <ImgLabel htmlFor="img-attach" className="material-icons">
+      <ImgLabel
+        htmlFor='img-attach'
+        className='material-icons'
+        // LogoImg={imgPreview}
+      >
         add_photo_alternate
-        <span className="a11y-hidden">이미지 첨부</span>
+        <span className='a11y-hidden'>이미지 첨부</span>
       </ImgLabel>
       <InputWrap>
         <Line>
-          <Label htmlFor="name">회사명</Label>
+          <Label htmlFor='name'>회사명</Label>
           <NameInput
-            type="text"
-            id="name"
-            {...register('name', {
+            type='text'
+            id='name'
+            {...register("name", {
               required: true,
             })}
           />
-          <CategoryButton type="button" id="category">
+          <CategoryButton type='button' id='category'>
             {selectedCategory}
             <Catagories onClick={SelectCategory}>
               {categories.map((el) => (
                 <CategoryItem key={el}>
                   <RadioLabel>
                     <RadioInput
-                      {...register('category.0')}
-                      type="radio"
-                      htmlFor="category"
+                      {...register("category.0")}
+                      type='radio'
+                      htmlFor='category'
                       value={el}
                     />
                     {el}
@@ -58,55 +73,55 @@ function TopForm({ register }) {
               ))}
             </Catagories>
           </CategoryButton>
-          <Label htmlFor="stock">
+          <Label htmlFor='stock'>
             상장여부
             <CheckInput
-              type="checkbox"
-              id="stock"
-              {...register('stock', {
+              type='checkbox'
+              id='stock'
+              {...register("stock", {
                 value: false,
               })}
             />
           </Label>
         </Line>
         <Line>
-          <Label htmlFor="site">사이트</Label>
+          <Label htmlFor='site'>사이트</Label>
           <Input
-            type="text"
-            id="site"
-            {...register('site', {
+            type='text'
+            id='site'
+            {...register("site", {
               required: true,
             })}
           />
-          <Label htmlFor="career">채용 페이지</Label>
+          <Label htmlFor='career'>채용 페이지</Label>
           <Input
-            type="text"
-            id="career"
-            {...register('career', {
+            type='text'
+            id='career'
+            {...register("career", {
               required: true,
             })}
           />
         </Line>
       </InputWrap>
     </Container>
-  )
+  );
 }
 
 const Container = styled.section`
   margin: 20px 0;
   padding: 10px 5px;
   height: 120px;
-  & input[type='text']:focus {
+  & input[type="text"]:focus {
     border: 1px solid #000;
   }
   @media (max-width: 768px) {
     height: 410px;
   } ;
-`
+`;
 const InputWrap = styled.article`
   margin: 5px 0;
   height: 120px;
-`
+`;
 const Line = styled.article`
   display: flex;
   margin: 10px 0;
@@ -121,11 +136,11 @@ const Line = styled.article`
   @media (max-width: 540px) {
     width: 100%;
   } ;
-`
+`;
 
 const ImgInput = styled.input`
   display: none;
-`
+`;
 const ImgLabel = styled.label`
   cursor: pointer;
   float: left;
@@ -133,6 +148,10 @@ const ImgLabel = styled.label`
   width: 100px;
   height: 100px;
   background-color: ${COLOR.gray};
+  background-image: url(${(props) => props.LogoImg});
+  background-size: 105px;
+  background-position: center;
+  background-repeat: no-repeat;
   font-size: 28px;
   line-height: 100px;
   text-align: center;
@@ -146,12 +165,12 @@ const ImgLabel = styled.label`
     display: block;
     margin: 0 auto;
   } ;
-`
+`;
 const Label = styled.label`
   margin-right: 5px;
   font-size: 15px;
   font-weight: 600;
-`
+`;
 const NameInput = styled.input`
   min-width: calc(100% - 270px);
   padding: 6px 10px;
@@ -162,7 +181,7 @@ const NameInput = styled.input`
   @media (max-width: 768px) {
     width: 100%;
   } ;
-`
+`;
 const Input = styled.input`
   padding: 6px 10px;
   width: 40%;
@@ -173,19 +192,19 @@ const Input = styled.input`
   @media (max-width: 768px) {
     width: 100%;
   }
-  &:nth-child(2) {
+  &:nth-of-type(2) {
     margin-right: 23px;
   }
-`
-const CheckInput = styled.input``
+`;
+const CheckInput = styled.input``;
 const RadioLabel = styled.label`
   display: flex;
   align-items: center;
-`
+`;
 const RadioInput = styled.input`
   margin: 0 4px;
   accent-color: #000;
-`
+`;
 const CategoryButton = styled.button`
   position: relative;
   display: inline-block;
@@ -206,16 +225,16 @@ const CategoryButton = styled.button`
     }
   }
   &::after {
-    content: 'expand_more';
+    content: "expand_more";
     float: right;
     display: block;
-    font-family: 'Material Icons';
+    font-family: "Material Icons";
     font-size: 18px;
   }
   @media (max-width: 768px) {
     margin: 0;
   }
-`
+`;
 const Catagories = styled.ul`
   display: none;
   position: absolute;
@@ -227,7 +246,7 @@ const Catagories = styled.ul`
   color: #000;
   font-size: 13px;
   border: 1px solid #000;
-`
-const CategoryItem = styled.li``
+`;
+const CategoryItem = styled.li``;
 
-export default TopForm
+export default TopForm;
