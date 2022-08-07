@@ -79,7 +79,7 @@
 
 #### 2.2 배포 URL
 
-<a href="#">🔗 &nbsp; 예정</a>
+<a href="https://bokjips.vercel.app/">🔗 &nbsp; bokjips.vercel.app</a>
 
 <br><br>
 
