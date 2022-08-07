@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import axios from "axios";
 
 import styled from "@emotion/styled";
@@ -12,9 +12,19 @@ import BottomForm from "../../components/company/write/BottomForm";
 
 export default function write() {
   const userInfo = useSelector((state) => state);
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, control } = useForm({
     mode: "onBlur",
+    defaultValues: {
+      welfareList: {
+        condition: [{}],
+        worksupport: [{}],
+        support: [{}],
+        environment: [{}],
+        etc: [],
+      },
+    },
   });
+
   const onSubmit = (data) => {
     console.log("Data: ", data);
     axios
@@ -36,7 +46,11 @@ export default function write() {
         {userInfo?.logged.isLogged ? (
           <Form onSubmit={handleSubmit(onSubmit)}>
             <TopForm register={register} />
-            <BottomForm register={register} />
+            <BottomForm
+              register={register}
+              useFieldArray={useFieldArray}
+              control={control}
+            />
             <Submit type='submit' className='material-icons'>
               check
             </Submit>
