@@ -12,7 +12,7 @@ import BottomForm from "../../components/company/write/BottomForm";
 
 export default function write() {
   const userInfo = useSelector((state) => state);
-  const { register, handleSubmit, control } = useForm({
+  const { register, handleSubmit, watch, control } = useForm({
     mode: "onBlur",
     defaultValues: {
       welfareList: {
@@ -20,7 +20,6 @@ export default function write() {
         worksupport: [{}],
         support: [{}],
         environment: [{}],
-        etc: [],
       },
     },
   });
@@ -45,7 +44,7 @@ export default function write() {
       <Container>
         {userInfo?.logged.isLogged ? (
           <Form onSubmit={handleSubmit(onSubmit)}>
-            <TopForm register={register} />
+            <TopForm register={register} watch={watch} />
             <BottomForm
               register={register}
               useFieldArray={useFieldArray}

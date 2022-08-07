@@ -50,7 +50,7 @@ export default function DetailForm({
               type='button'
               className='material-icons'
               onClick={() => {
-                if (fields.length > 1) {
+                if (fields.length > 1 || kind == "etc") {
                   remove(index);
                 } else {
                   setShowAlert(true);

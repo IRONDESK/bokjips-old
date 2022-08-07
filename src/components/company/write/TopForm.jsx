@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import styled from "@emotion/styled";
 import { COLOR } from "../../../constants";
 
-function TopForm({ register }) {
+function TopForm({ register, watch }) {
   const [selectedCategory, setselectedCategory] = useState("카테고리");
+  // const imageValue = watch("image");
+  // const [imgPreview, setImgPreview] = useState("");
   const categories = [
     "IT/플랫폼",
     "유통",
@@ -19,14 +21,27 @@ function TopForm({ register }) {
       setselectedCategory(e.target.value);
     }
   };
+
+  // useEffect(() => {
+  //   if (imageValue && imageValue.length > 0) {
+  //     const file = imageValue[0];
+  //     setImgPreview(URL.createObjectURL(file));
+  //   }
+  // }, [imageValue]);
+
   return (
     <Container>
       <ImgInput
-        // type="file"
+        // type='file'
+        // accept='image/*'
         id='img-attach'
-        {...register("image")}
+        // {...register("image", { setvalue: (value) => value[0] })}
       />
-      <ImgLabel htmlFor='img-attach' className='material-icons'>
+      <ImgLabel
+        htmlFor='img-attach'
+        className='material-icons'
+        // LogoImg={imgPreview}
+      >
         add_photo_alternate
         <span className='a11y-hidden'>이미지 첨부</span>
       </ImgLabel>
@@ -133,6 +148,10 @@ const ImgLabel = styled.label`
   width: 100px;
   height: 100px;
   background-color: ${COLOR.gray};
+  background-image: url(${(props) => props.LogoImg});
+  background-size: 105px;
+  background-position: center;
+  background-repeat: no-repeat;
   font-size: 28px;
   line-height: 100px;
   text-align: center;
