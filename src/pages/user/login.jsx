@@ -10,7 +10,7 @@ import { COLOR } from "../../constants";
 import { Title } from "../../components/layouts";
 import ModalAlert from "../../components/ModalAlert";
 
-export default function login() {
+export default function Login() {
   const dispatch = useDispatch();
   const router = useRouter();
 

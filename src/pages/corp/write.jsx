@@ -10,7 +10,7 @@ import { Title } from "../../components/layouts";
 import TopForm from "../../components/company/write/TopForm";
 import BottomForm from "../../components/company/write/BottomForm";
 
-export default function write() {
+export default function Write() {
   const userInfo = useSelector((state) => state);
   const { register, handleSubmit, watch, control } = useForm({
     mode: "onBlur",

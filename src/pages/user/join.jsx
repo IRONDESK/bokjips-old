@@ -6,7 +6,7 @@ import { COLOR } from "../../constants";
 
 import { Title } from "../../components/layouts";
 
-export default function join() {
+export default function Join() {
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [userPwd, setUserPwd] = useState("");
