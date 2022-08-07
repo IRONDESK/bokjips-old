@@ -12,6 +12,9 @@ export default function FilterList({ itemLength }) {
 
   return (
     <Container>
+      <p style={{ padding: "4px 0", fontSize: "0.8rem", textAlign: "right" }}>
+        검색 및 필터 기능은 현재 미제공됩니다. 빠른 시일 내에 만나뵙겠습니다.
+      </p>
       <FilterNav>
         <ItemAmount>
           총 <strong>{itemLength}개</strong>의 기업
