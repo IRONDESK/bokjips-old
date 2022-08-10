@@ -79,7 +79,8 @@
 
 #### 2.2 배포 URL
 
-<a href="https://bokjips.vercel.app/">🔗 &nbsp; bokjips.vercel.app</a>
+<a href="http://52.79.165.66:3000/">🔗 &nbsp; http://52.79.165.66:3000/</a>
+* 서버 연결 배포된 링크입니다.
 
 <br><br>
 
