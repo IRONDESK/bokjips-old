@@ -61,14 +61,16 @@ export default function Comments() {
     <Container>
       <Nav>
         <Title>댓글 {data?.dtoList.length}개</Title>
-        <Write
-          onClick={() => {
-            setCommentShow(!commentShow);
-          }}
-          className='material-icons'
-        >
-          edit
-        </Write>
+        {
+          <Write
+            onClick={() => {
+              setCommentShow(!commentShow);
+            }}
+            className='material-icons'
+          >
+            edit
+          </Write>
+        }
       </Nav>
       <InputForm onSubmit={onSubmit} show={commentShow}>
         {commentShow ? (
