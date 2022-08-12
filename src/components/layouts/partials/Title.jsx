@@ -10,10 +10,6 @@ export const Title = ({ title }) => {
           ? "복지편살 ─ 복잡한 복지 정보, 편하게 살펴보자"
           : `${title} | 복지편살`}
       </title>
-      <link
-        href='https://fonts.googleapis.com/icon?family=Material+Icons'
-        rel='stylesheet'
-      />
       <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
       <meta name='viewport' content='width=device-width, initial-scale=1.0' />
       <meta name='Description' content='' />
