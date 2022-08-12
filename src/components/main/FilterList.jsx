@@ -1,61 +1,77 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { COLOR } from "../../constants";
 import { MainFilter } from "../../lib/GlobalData";
 
-export default function FilterList({ itemLength }) {
+export default function FilterList({
+  itemLength,
+  setSearchKeyword,
+  selectedFilter,
+  setSelectedFilter,
+}) {
   const [showFilter, setShowFilter] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState([]);
-  const selectFilter = (e) => {
-    if (e.target.id) setSelectedFilter([...selectedFilter, e.target.id]);
+  const searchInput = useRef();
+
+  const FilterCorp = (e) => {
+    if (e.target.id && e.target.checked) {
+      setSelectedFilter([...selectedFilter, e.target.id]);
+    }
+    if (!e.target.checked) {
+      let filtered = selectedFilter.filter((el) => el !== e.target.id);
+      setSelectedFilter(filtered);
+    }
+  };
+
+  const SearchCorp = (e) => {
+    e.preventDefault();
+    setSearchKeyword(searchInput.current.value);
   };
 
   return (
     <Container>
-      <p style={{ padding: "4px 0", fontSize: "0.8rem", textAlign: "right" }}>
-        검색 및 필터 기능은 현재 미제공됩니다. 빠른 시일 내에 만나뵙겠습니다.
-      </p>
       <FilterNav>
         <ItemAmount>
-          총 <strong>{itemLength}개</strong>의 기업
+          총 <strong>{itemLength ?? 0}개</strong>의 기업
         </ItemAmount>
-        <Inputs>
-          <Search>
-            <SearchInput type='text' placeholder='기업명으로 검색' />
-            <i className='material-icons'>search</i>
+        <SearchFilterWrap>
+          <Search onSubmit={(e) => SearchCorp(e)}>
+            <input
+              type='text'
+              ref={searchInput}
+              placeholder='기업명, 카테고리로 검색'
+            />
+            <button className='material-icons' type='submit'>
+              search
+            </button>
           </Search>
           <FilterShowBtn
             type='button'
+            isSelected={selectedFilter.length > 0}
             onClick={() => setShowFilter(!showFilter)}
           >
-            <i className='material-icons'>filter_alt</i> 필터
+            <i className='material-icons'>filter_alt</i>{" "}
+            {selectedFilter.length > 0 ? selectedFilter.length + "개" : "필터"}
           </FilterShowBtn>
-        </Inputs>
+        </SearchFilterWrap>
       </FilterNav>
-      <FilterWrap show={showFilter} onClick={selectFilter}>
-        {showFilter
-          ? MainFilter.map((el) => (
-              <li key={el.id}>
-                <ItemCheck type='checkbox' id={el.id} />
-                <FilterItem htmlFor={el.id} value={el.value}>
-                  {el.text}
-                </FilterItem>
-              </li>
-            ))
-          : null}
+      <FilterWrap show={showFilter} onClick={FilterCorp}>
+        {MainFilter.map((el) => (
+          <li key={el.id}>
+            <ItemCheck type='checkbox' id={el.value} />
+            <FilterItem htmlFor={el.value}>{el.text}</FilterItem>
+          </li>
+        ))}
       </FilterWrap>
     </Container>
   );
 }
 
 const Container = styled.section`
-  margin: 10px 0;
+  margin: 24px 0;
   width: 100%;
-  @media (max-width: 1024px) {
-    padding: 0 30px;
-  }
   @media (max-width: 768px) {
     display: flex;
+    margin: 16px 0;
     flex-direction: column;
     flex-wrap: wrap;
   } ;
@@ -65,14 +81,10 @@ const FilterNav = styled.section`
   display: flex;
   align-items: center;
   gap: 16px;
+  padding: 0 20px;
   @media (max-width: 768px) {
     flex-direction: column;
   } ;
-`;
-const Inputs = styled.article`
-  display: flex;
-  align-items: center;
-  gap: 8px;
 `;
 const ItemAmount = styled.p`
   font-size: 15px;
@@ -84,35 +96,51 @@ const ItemAmount = styled.p`
   } ;
 `;
 
-const Search = styled.div`
+const SearchFilterWrap = styled.article`
+  flex: 1;
   display: flex;
+  width: 100%;
   justify-content: space-between;
-  width: 240px;
+  align-items: center;
+  gap: 8px;
+`;
+const Search = styled.form`
+  flex: 1;
+  display: flex;
   padding: 8px 12px;
   border-radius: 20px;
   border: 1px solid ${COLOR.gray};
-  box-sizing: border-box;
-  i {
-    display: block;
-    padding: 5px;
+  input {
+    width: calc(100% - 32px);
+    outline: none;
+    border: none;
+    font-size: 0.9rem;
+    line-height: 28px;
+  }
+  button {
+    width: 32px;
+    padding: 4px;
     font-family: "Material Icons";
-    font-size: 16px;
+    font-size: 20px;
     color: ${COLOR.darkgray};
   }
+  @media (max-width: 768px) {
+    padding: 4px 12px;
+  } ;
 `;
-const SearchInput = styled.input`
-  flex: 1;
-  outline: none;
-  border: none;
-`;
+
 const FilterShowBtn = styled.button`
   display: flex;
   padding: 8px 12px;
-  height: 36px;
+  min-width: 68px;
+  height: 32px;
   align-items: center;
-  background-color: ${COLOR.main};
-  color: #fff;
+  border: 1px solid ${COLOR.modal};
   border-radius: 15px;
+  color: ${COLOR.modal};
+  font-size: 0.8rem;
+  font-weight: ${(props) => (props.isSelected ? "600" : "300")};
+  opacity: ${(props) => (props.isSelected ? "1" : "0.6")};
   i {
     margin: 0 4px 0 0;
     font-size: 16px;
@@ -122,11 +150,17 @@ const FilterShowBtn = styled.button`
 const FilterWrap = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  margin: 12px 0 24px 0;
-  gap: 10px 5px;
+  margin: ${(prop) => (prop.show ? "20px 0" : "8px 0")};
+  padding: ${(prop) => (prop.show ? "20px" : "0 20px")};
   height: ${(prop) => (prop.show ? "auto" : "0")};
+  background-color: ${COLOR.graybg};
+  border-radius: 10px;
+  gap: 12px;
   opacity: ${(prop) => (prop.show ? "1" : "0")};
   transition: all 0.3s;
+  @media (max-width: 1024px) {
+    border-radius: 0;
+  } ;
 `;
 const ItemCheck = styled.input`
   display: none;
@@ -134,17 +168,23 @@ const ItemCheck = styled.input`
     color: ${COLOR.main};
     font-weight: 600;
     border: 1px solid ${COLOR.main};
-    box-shadow: 0 0 4px 1px rgba(${COLOR.mainrgb}, 0.2);
   }
 `;
 const FilterItem = styled.label`
   cursor: pointer;
   display: inline-block;
+  background-color: #fff;
   padding: 8px 12px;
   font-size: 13px;
   border-radius: 20px;
-  border: 1px solid ${COLOR.gray};
+  border: 1px solid #fff;
   &:hover {
-    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
+    border: 1px solid ${COLOR.main};
+  }
+  @media (max-width: 768px) {
+    padding: 12px 14px;
+    &:hover {
+      border: 1px solid #fff;
+    }
   }
 `;
