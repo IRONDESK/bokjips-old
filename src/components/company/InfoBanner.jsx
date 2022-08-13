@@ -71,7 +71,7 @@ export default function InfoBanner({ corpId }) {
           }}
         >
           <i className='material-icons'>
-            {data?.goodState ? "bookmark_added" : "bookmark_add"}
+            {data?.goodState ? "check" : "favorite"}
           </i>{" "}
           {data?.good}
         </GoodBtn>

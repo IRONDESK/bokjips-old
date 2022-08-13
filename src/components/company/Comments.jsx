@@ -133,8 +133,8 @@ export default function Comments() {
           : null}
         {data?.dtoList.length == 0 ? (
           <NoDataSection>
-            <p className='material-icons'>playlist_remove</p>
-            댓글이 없는 회사입니다. 첫 번째 댓글의 주인공이 되어주세요.
+            <p className='material-icons'>playlist_remove</p>이 회사의 첫 번째
+            댓글 주인공이 되어주세요
           </NoDataSection>
         ) : null}
       </List>

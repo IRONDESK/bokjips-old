@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-
-import Link from "next/link";
 import styled from "@emotion/styled";
-import { COLOR } from "../../constants";
+import Link from "next/link";
 import axios from "axios";
+
+import { COLOR } from "../../constants";
 
 export default function MoreCorp({ corpId, category, stock }) {
   const [MoreCorp, setMoreCorp] = useState();
@@ -37,7 +37,7 @@ export default function MoreCorp({ corpId, category, stock }) {
                 <Item>
                   <CorpName>{el.name}</CorpName>
                   <Good>
-                    <span className='material-icons'>bookmark</span>
+                    <span className='material-icons'>favorite</span>
                     {el.good}
                   </Good>
                 </Item>
@@ -55,7 +55,7 @@ const Container = styled.section`
 `;
 const Items = styled.article`
   display: flex;
-  padding: 16px 20px;
+  padding: 24px 20px;
   margin: -30px auto 0 auto;
   max-width: 820px;
   overflow: auto;
@@ -86,6 +86,9 @@ const Item = styled.div`
   cursor: pointer;
   &:hover {
     color: ${COLOR.main};
+  }
+  @media (max-width: 640px) {
+    min-width: 148px;
   }
 `;
 const CorpName = styled.h5`
