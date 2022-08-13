@@ -68,14 +68,14 @@ export default function Comments() {
       });
   };
 
-  const deleteComment = (comments_id, user_id) => {
+  const deleteComment = (comments_id, writer) => {
     const confirmDel = confirm("선택하신 댓글을 삭제하시겠습니까?");
-    if (confirmDel && user_id === userInfo?.logged.user_id) {
+    if (confirmDel && writer === userInfo?.logged.user_id) {
       axios
         .delete(`http://52.79.165.66:8081/comments/delete/${comments_id}`)
         .then(() => mutate(getCommentURL));
     }
-    if (confirmDel && user_id !== userInfo?.logged.user_id) {
+    if (confirmDel && writer !== userInfo?.logged.user_id) {
       alert("삭제 권한이 없습니다.");
     }
   };
@@ -121,7 +121,7 @@ export default function Comments() {
                     <button
                       className='material-icons'
                       onClick={() => {
-                        deleteComment(el.comments_id, el.user_id);
+                        deleteComment(el.comments_id, el.writer_id);
                       }}
                     >
                       delete_forever
