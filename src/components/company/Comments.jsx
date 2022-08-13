@@ -1,16 +1,16 @@
 import React, { useState } from "react";
+import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
 import useSWR, { useSWRConfig } from "swr";
 import axios from "axios";
 
-import styled from "@emotion/styled";
+import useUserInfo from "../../lib/useUserInfo";
 import { COLOR } from "../../constants";
 
 export default function Comments() {
   const router = useRouter();
   const corp_id = router.query.id;
-  const userInfo = useSelector((state) => state);
+  const { userInfo } = useUserInfo();
   const { mutate } = useSWRConfig();
 
   const [commentShow, setCommentShow] = useState(false);
@@ -52,12 +52,12 @@ export default function Comments() {
         JSON.stringify({
           title: "제목2",
           content: commentText,
-          user_id: userInfo.logged.user_id,
+          user_id: userInfo?.user_id,
           corp_id,
         }),
         {
           headers: {
-            Authorization: `Bearer ${userInfo?.logged.token}`,
+            Authorization: `Bearer ${userInfo?.token}`,
             "Content-Type": `application/json`,
           },
         }
@@ -70,12 +70,12 @@ export default function Comments() {
 
   const deleteComment = (comments_id, writer) => {
     const confirmDel = confirm("선택하신 댓글을 삭제하시겠습니까?");
-    if (confirmDel && writer === userInfo?.logged.user_id) {
+    if (confirmDel && writer === userInfo?.user_id) {
       axios
         .delete(`http://52.79.165.66:8081/comments/delete/${comments_id}`)
         .then(() => mutate(getCommentURL));
     }
-    if (confirmDel && writer !== userInfo?.logged.user_id) {
+    if (confirmDel && writer !== userInfo?.user_id) {
       alert("삭제 권한이 없습니다.");
     }
   };
