@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
+import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import { useForm, useFieldArray } from "react-hook-form";
 import axios from "axios";
 
-import styled from "@emotion/styled";
 import { COLOR } from "../../constants";
 
 import { Title } from "../../components/layouts";

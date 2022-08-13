@@ -52,7 +52,7 @@ const Items = styled.section`
   grid-template-columns: repeat(2, 1fr);
   gap: 20px 30px;
   @media (max-width: 1024px) {
-    padding: 0 30px;
+    padding: 0 20px;
   }
   @media (max-width: 768px) {
     display: flex;
