@@ -43,7 +43,9 @@ export default function Home() {
                   kind='environment'
                   data={data?.welfareList?.environment}
                 />
-                <Detail kind='etc' data={data?.welfareList?.etc} />
+                {data?.welfareList?.etc ? (
+                  <Detail kind='etc' data={data?.welfareList?.etc} />
+                ) : null}
               </>
             ) : null}
           </Details>
