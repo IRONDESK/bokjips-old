@@ -52,7 +52,10 @@ export default function Home() {
           <ReportBtn
             type='button'
             onClick={() => {
-              setErrorReportModal(true);
+              // setErrorReportModal(true);
+              alert(
+                `준비 중인 기능입니다.\n 수정이 필요한 경우, 댓글로 요청 바랍니다.`
+              );
             }}
           >
             <span className='material-icons'>priority_high</span>
