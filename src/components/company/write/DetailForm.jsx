@@ -71,17 +71,15 @@ export default function DetailForm({
           text={"최소 1개 이상의 항목이 입력되야 합니다."}
         />
       ) : null}
-      <Buttons>
-        <Button
-          className='material-icons'
-          onClick={(e) => {
-            e.preventDefault();
-            append({});
-          }}
-        >
-          add
-        </Button>
-      </Buttons>
+      <Button
+        className='material-icons'
+        onClick={(e) => {
+          e.preventDefault();
+          append({});
+        }}
+      >
+        add
+      </Button>
     </Container>
   );
 }
@@ -107,6 +105,9 @@ const SubList = styled.li`
   button {
     opacity: 0.3;
   }
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 const SubTitle = styled.input`
   flex: 1;
@@ -127,16 +128,15 @@ const OptionTxt = styled.input`
   outline: none;
 `;
 
-const Buttons = styled.article`
-  margin: 5px 0;
-  text-align: center;
-`;
 const Button = styled.button`
-  display: inline-block;
-  margin: 0 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
   width: 35px;
   height: 35px;
   border-radius: 100%;
+  font-size: 1.6rem;
   &:hover {
     background-color: #000;
     color: #fff;

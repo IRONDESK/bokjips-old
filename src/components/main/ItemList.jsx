@@ -5,9 +5,15 @@ import axios from "axios";
 import CorpItem from "./CorpItem";
 import useSWR from "swr";
 
-export default function ItemList({ setItemLength }) {
+export default function ItemList({
+  setItemLength,
+  searchKeyword,
+  selectedFilter,
+}) {
   const { data, error } = useSWR(
-    "http://52.79.165.66:8081/corp/select",
+    `http://52.79.165.66:8081/${
+      searchKeyword ? "search/" + searchKeyword : "corp/select"
+    }`,
     (...args) => fetch(...args).then((res) => res.json())
   );
   useEffect(() => {
@@ -46,7 +52,7 @@ const Items = styled.section`
   grid-template-columns: repeat(2, 1fr);
   gap: 20px 30px;
   @media (max-width: 1024px) {
-    padding: 0 30px;
+    padding: 0 20px;
   }
   @media (max-width: 768px) {
     display: flex;

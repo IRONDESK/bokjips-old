@@ -6,11 +6,23 @@ import { useState } from "react";
 
 export default function Home() {
   const [itemLength, setItemLength] = useState(0);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState([]);
+
   return (
     <>
       <Wrap>
-        <FilterList itemLength={itemLength} />
-        <ItemList setItemLength={setItemLength} />
+        <FilterList
+          itemLength={itemLength}
+          setSearchKeyword={setSearchKeyword}
+          selectedFilter={selectedFilter}
+          setSelectedFilter={setSelectedFilter}
+        />
+        <ItemList
+          setItemLength={setItemLength}
+          searchKeyword={searchKeyword}
+          selectedFilter={selectedFilter}
+        />
       </Wrap>
     </>
   );

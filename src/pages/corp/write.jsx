@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
+import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import { useForm, useFieldArray } from "react-hook-form";
 import axios from "axios";
 
-import styled from "@emotion/styled";
 import { COLOR } from "../../constants";
 
 import { Title } from "../../components/layouts";
@@ -76,13 +76,15 @@ const Form = styled.form``;
 
 const Submit = styled.button`
   /* cursor: ${(prop) => (prop.disabled ? "not-allowed" : "pointer")}; */
-  display: block;
-  margin: 35px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px auto;
   width: 55px;
   height: 55px;
-  font-size: 28px;
   border: 2px solid #000;
   border-radius: 100%;
+  font-size: 1.6rem;
   &:focus,
   &:hover {
     background-color: ${COLOR.main};
