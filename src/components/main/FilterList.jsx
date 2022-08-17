@@ -40,6 +40,18 @@ export default function FilterList({
               ref={searchInput}
               placeholder='기업명, 카테고리로 검색'
             />
+            {searchInput?.current?.value && (
+              <button
+                className='material-icons'
+                type='button'
+                onClick={() => {
+                  setSearchKeyword("");
+                  searchInput.current.value = "";
+                }}
+              >
+                backspace
+              </button>
+            )}
             <button className='material-icons' type='submit'>
               search
             </button>
