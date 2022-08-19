@@ -12,6 +12,10 @@ export const Title = ({ title }) => {
       </title>
       <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
       <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+      <meta
+        http-equiv='Content-Security-Policy'
+        content='upgrade-insecure-requests'
+      />
       <meta name='Description' content='' />
       <link rel='icon' type='image/x-icon' href='./favicon.ico' />
       <meta property='og:title' content='복지편살' />
