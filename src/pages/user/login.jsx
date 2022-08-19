@@ -53,7 +53,7 @@ export default function Login() {
         <Form onSubmit={handleSubmit}>
           <Label htmlFor='user-email'>이메일</Label>
           <Input
-            type='text'
+            type='email'
             name='email'
             value={userInput.email}
             onChange={handleUserInput}
@@ -121,9 +121,9 @@ const Label = styled.label`
 const Input = styled.input`
   display: block;
   margin: 10px 0 30px 0;
-  padding: 3px 5px;
+  padding: 8px;
   width: 100%;
-  font-size: 20px;
+  font-size: 1.5rem;
   border: none;
   outline: none;
   border-bottom: 2px solid black;
@@ -133,13 +133,15 @@ const Input = styled.input`
 `;
 const Button = styled.button`
   cursor: ${(prop) => (prop.disabled ? "not-allowed" : "pointer")};
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0 auto;
   width: 55px;
   height: 55px;
-  font-size: 28px;
   border: 2px solid #000;
   border-radius: 100%;
+  font-size: 1.6rem;
   &:focus,
   &:hover {
     background-color: ${COLOR.main};

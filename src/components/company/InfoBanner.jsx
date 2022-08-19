@@ -70,9 +70,9 @@ export default function InfoBanner({ corpId }) {
             PlusGood(userInfo, corpId, setAlertMsg, setGoodAlert, mutate);
           }}
         >
-          <span className='material-icons'>
-            {data?.goodState ? "bookmark_added" : "bookmark_add"}
-          </span>{" "}
+          <i className='material-icons'>
+            {data?.goodState ? "check" : "favorite"}
+          </i>{" "}
           {data?.good}
         </GoodBtn>
         <ul className='site-list'>
@@ -112,6 +112,7 @@ const Container = styled.section`
   text-align: right;
   @media (max-width: 640px) {
     padding: 16px 24px;
+    height: 20vh;
   }
   .corpname {
     margin: 20px 0 0 0;
@@ -120,14 +121,14 @@ const Container = styled.section`
     word-break: keep-all;
     @media (max-width: 640px) {
       margin: 10px 0 0 0;
-      font-size: 28px;
+      font-size: 1.5rem;
     }
   }
   .category {
     margin: 12px 0;
     @media (max-width: 640px) {
       margin: 8px 0 0 0;
-      font-size: 14px;
+      font-size: 0.85rem;
     }
   }
   .site-list {
@@ -146,8 +147,8 @@ const Logo = styled.img`
   border-radius: 100%;
   object-fit: contain;
   @media (max-width: 640px) {
-    width: 60px;
-    height: 60px;
+    width: 52px;
+    height: 52px;
     float: left;
   }
 `;
@@ -160,10 +161,10 @@ const GoodBtn = styled.button`
   padding: 8px 16px;
   background-color: ${(props) => (props.state ? COLOR.main : "#000")};
   color: #fff;
-  font-size: 16px;
-  font-weight: ${(props) => (props.state ? "700" : "300")};
+  font-size: 1rem;
+  font-weight: ${(props) => (props.state ? "600" : "300")};
   border-radius: 30px;
-  span {
+  i {
     font-size: 20px;
   }
   &:hover {
@@ -171,8 +172,7 @@ const GoodBtn = styled.button`
     color: #fff;
   }
   @media (max-width: 640px) {
-    margin: 12px 0 0 0;
-    font-size: 14px;
+    margin: 16px 0 0 0;
   }
 `;
 
@@ -180,7 +180,7 @@ const LinkBtn = styled.button`
   display: block;
   padding: 10px 0;
   flex: 1;
-  font-size: 16px;
+  font-size: 1rem;
   &:hover {
     color: ${COLOR.main};
   }
@@ -190,6 +190,7 @@ const LinkBtn = styled.button`
     font-family: "Material Icons";
   }
   @media (max-width: 640px) {
-    padding: 8px 0;
+    padding: 6px 8px 6px 0;
+    font-size: 0.9rem;
   }
 `;

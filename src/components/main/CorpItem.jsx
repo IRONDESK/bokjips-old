@@ -12,56 +12,56 @@ export default function CorpItem({
   welfareList,
 }) {
   return (
-    <Container>
-      <Top>
-        <div className='top_head'>
-          <Logo src={image} alt={name} />
-          <Info>
-            <Name>{name}</Name>
-            {stock ? <StockTag src='/images/icons/stock.svg' /> : null}
-            <CategoryTag>{category}</CategoryTag>
-          </Info>
-        </div>
-        <WelfareWrap>
-          {welfareList.slice(0, 12).map((el, index) => (
-            <Welfare key={index}>{el}</Welfare>
-          ))}
-        </WelfareWrap>
-      </Top>
+    <Link href={`/corp/${corp_id}`}>
+      <Container>
+        <Top>
+          <div className='top_head'>
+            <Logo src={image} alt={name} />
+            <Info>
+              <Name>{name}</Name>
+              {stock ? (
+                <StockTag className='material-icons'>trending_up</StockTag>
+              ) : null}
+              <CategoryTag>{category}</CategoryTag>
+            </Info>
+          </div>
+          <WelfareWrap>
+            {welfareList.map((el, index) => (
+              <Welfare key={index}>{el}</Welfare>
+            ))}
+          </WelfareWrap>
+        </Top>
 
-      <Options>
-        <Like>♥ {good}</Like>
-        <Link href={`/corp/${corp_id}`}>
-          <DetailBtn>
-            <span className='material-icons'>chevron_right</span>
-            자세히
-          </DetailBtn>
-        </Link>
-      </Options>
-    </Container>
+        <CardDetail>
+          <Detail>{welfareList.length}개의 복지정보</Detail>
+          <Detail>♥ {good}</Detail>
+        </CardDetail>
+      </Container>
+    </Link>
   );
 }
 
 const Container = styled.article`
+  cursor: pointer;
   position: relative;
   width: 100%;
-  height: 170px;
+  height: 148px;
   border-radius: 10px;
   border: 1px solid ${COLOR.gray};
   overflow: hidden;
   transition: box-shadow 0.5s;
   &:hover {
-    border: none;
+    border: 1px solid #fff;
     box-shadow: 0 3px 15px 1px rgba(0, 0, 0, 0.1);
   }
   @media (max-width: 960px) {
-    height: 180px;
+    height: 152px;
   }
 `;
 const Top = styled.div`
-  padding: 20px 16px;
+  padding: 20px 16px 0;
   @media (max-width: 960px) {
-    padding: 12px 16px;
+    padding: 12px 16px 0;
     .top_head {
       display: flex;
       padding: 0 0 8px 0;
@@ -78,8 +78,8 @@ const Logo = styled.img`
   border-radius: 100%;
   object-fit: contain;
   @media (max-width: 1024px) {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
   }
 `;
 const Info = styled.div`
@@ -101,13 +101,15 @@ const Name = styled.h3`
     white-space: nowrap;
   } ;
 `;
-const StockTag = styled.img`
+const StockTag = styled.span`
   margin: 0 4px;
   padding: 3px;
   width: 23px;
   height: 23px;
   border: 1px solid ${COLOR.darkgray};
   border-radius: 100%;
+  color: ${COLOR.darkgray};
+  font-size: 16px;
 `;
 const CategoryTag = styled.span`
   display: inline-block;
@@ -125,7 +127,7 @@ const WelfareWrap = styled.ul`
   display: flex;
   padding: 0 16px;
   flex-wrap: wrap;
-  gap: 5px 4px;
+  gap: 6px 5px;
   max-height: 50px;
   overflow: hidden;
   @media (max-width: 960px) {
@@ -139,30 +141,22 @@ const Welfare = styled.li`
   border-radius: 5px;
   border: 1px solid ${COLOR.gray};
 `;
-const Options = styled.div`
+const CardDetail = styled.ul`
   position: absolute;
-  display: flex;
   padding: 0 18px;
   width: 100%;
-  height: 50px;
-  justify-content: space-between;
-  align-items: center;
+  height: 32px;
   bottom: 0;
-  font-weight: 500;
-  border-top: 1px solid ${COLOR.gray};
+  text-align: right;
 `;
-const Like = styled.span`
+const Detail = styled.li`
   display: inline-block;
+  margin-right: 16px;
   min-width: 20px;
+  color: ${COLOR.modal};
+  font-size: 0.8rem;
   text-align: left;
-  font-size: 13px;
-`;
-const DetailBtn = styled.a`
-  display: flex;
-  padding: 2px 8px;
-  align-items: center;
-  font-size: 14px;
-  &:hover {
-    color: ${COLOR.main};
+  &:last-of-type {
+    margin: 0;
   }
 `;

@@ -19,39 +19,35 @@ export const Header = () => {
   return (
     <Container>
       <Nav>
-        <UserInfo>
+        <OptionsWrap>
           {userInfo.logged.isLogged ? (
             <>
-              <Item isButton={false}>
-                {userInfo.logged.user_name} 님, 안녕하세요
-              </Item>
-              <Item isButton={true}>
-                <Link href='/corp/write'>복지정보 작성</Link>
-              </Item>
-              <Item
-                isButton={true}
-                onClick={Logout}
-                style={{ cursor: "pointer" }}
-              >
+              <Option>
+                <Link href='/user/info'>
+                  <span>{userInfo?.logged.user_name}</span>
+                </Link>
+              </Option>
+              <Option>
+                <Link href='/user/good'>나의 좋아요</Link>
+              </Option>
+              <Option onClick={Logout} style={{ cursor: "pointer" }}>
                 로그아웃
-              </Item>
+              </Option>
             </>
           ) : (
             <>
-              <Item isButton={true}>
+              <Option>
                 <Link href='/user/login'>로그인</Link>
-              </Item>
-              <Item isButton={true}>
+              </Option>
+              <Option>
                 <Link href='/user/join'>회원가입</Link>
-              </Item>
+              </Option>
             </>
           )}
-        </UserInfo>
+        </OptionsWrap>
         <Link href='/'>
           <Title>
-            <strong>복지</strong>
-            <br />
-            편살
+            <strong>복지</strong>편살
           </Title>
         </Link>
       </Nav>
@@ -71,7 +67,6 @@ const Title = styled.h1`
   margin: 0 auto;
   padding: 10px 0 0 0;
   width: 100px;
-  font-weight: 800;
   font-size: 40px;
   font-family: "GangwonEdu";
   text-align: center;
@@ -88,14 +83,16 @@ const Title = styled.h1`
   } ;
 `;
 
-const UserInfo = styled.ul`
+const OptionsWrap = styled.ul`
   float: right;
   display: flex;
   gap: 0 13px;
 `;
-const Item = styled.li`
+const Option = styled.li`
+  cursor: pointer;
+  padding: 4px;
   font-size: 14px;
   &:hover {
-    color: ${(props) => (props.isButton ? COLOR.main : "none")};
+    color: ${COLOR.main};
   }
 `;
