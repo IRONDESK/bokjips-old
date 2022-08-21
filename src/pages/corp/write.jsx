@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useSelector } from "react-redux";
+import useUserInfo from "../../lib/useUserInfo";
 import { useForm, useFieldArray } from "react-hook-form";
 import axios from "axios";
 
@@ -11,7 +11,7 @@ import TopForm from "../../components/company/write/TopForm";
 import BottomForm from "../../components/company/write/BottomForm";
 
 export default function Write() {
-  const userInfo = useSelector((state) => state);
+  const { userInfo } = useUserInfo();
   const { register, handleSubmit, watch, control } = useForm({
     mode: "onBlur",
     defaultValues: {
@@ -25,11 +25,10 @@ export default function Write() {
   });
 
   const onSubmit = (data) => {
-    console.log("Data: ", data);
     axios
       .post("http://52.79.165.66:8081/corp/insert", JSON.stringify(data), {
         headers: {
-          Authorization: `Bearer ${userInfo?.logged.token}`,
+          Authorization: `Bearer ${userInfo?.token}`,
           "Content-Type": `application/json`,
         },
       })
@@ -42,7 +41,7 @@ export default function Write() {
     <>
       <Title title='새 회사 추가' />
       <Container>
-        {userInfo?.logged.isLogged ? (
+        {userInfo?.isLogged ? (
           <Form onSubmit={handleSubmit(onSubmit)}>
             <TopForm register={register} watch={watch} />
             <BottomForm

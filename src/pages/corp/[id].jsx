@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-
 import styled from "@emotion/styled";
+import useUserInfo from "../../lib/useUserInfo";
+
 import { COLOR } from "../../constants";
-import { useSelector } from "react-redux";
 
 import { Title } from "../../components/layouts";
 import Comments from "../../components/company/Comments";
@@ -16,11 +16,13 @@ import MoreCorp from "../../components/company/MoreCorp";
 export default function Home() {
   const router = useRouter();
   const corp_id = router.query.id;
-  const user_id = useSelector((state) => state.logged.user_id);
+  const { userInfo } = useUserInfo();
 
   const [errorReportModal, setErrorReportModal] = useState(false);
   const { data } = useSWR(
-    `http://52.79.165.66:8081/corp/select/${corp_id}/${user_id ?? "user"}`,
+    `http://52.79.165.66:8081/corp/select/${corp_id}/${
+      userInfo.user_id ?? "user"
+    }`,
     (...args) => fetch(...args).then((res) => res.json())
   );
 

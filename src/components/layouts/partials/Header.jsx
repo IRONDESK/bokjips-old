@@ -1,15 +1,17 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-
 import styled from "@emotion/styled";
+
 import { COLOR } from "../../../constants";
-import { useDispatch, useSelector } from "react-redux";
+
+import useUserInfo from "../../../lib/useUserInfo";
+import { useDispatch } from "react-redux";
 import { logoutAccount } from "../../../store/LoggedState";
 
 export const Header = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const userInfo = useSelector((state) => state);
+  const { userInfo } = useUserInfo();
 
   const Logout = () => {
     dispatch(logoutAccount());
@@ -20,11 +22,11 @@ export const Header = () => {
     <Container>
       <Nav>
         <OptionsWrap>
-          {userInfo.logged.isLogged ? (
+          {userInfo.isLogged ? (
             <>
               <Option>
                 <Link href='/user/info'>
-                  <span>{userInfo?.logged.user_name}</span>
+                  <span>{userInfo?.user_name}</span>
                 </Link>
               </Option>
               <Option>
