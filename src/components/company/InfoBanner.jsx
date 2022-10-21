@@ -2,18 +2,18 @@ import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import useSWR, { useSWRConfig } from "swr";
-
 import styled from "@emotion/styled";
-import { COLOR } from "../../constants";
-import { useSelector } from "react-redux";
 
+import { COLOR } from "../../constants";
+
+import useUserInfo from "../../lib/useUserInfo";
 import ModalAlert from "../ModalAlert";
 
 function PlusGood(userInfo, corpId, setAlertMsg, setGoodAlert, mutate) {
-  if (userInfo.logged.isLogged) {
+  if (userInfo.isLogged) {
     axios
       .post("http://52.79.165.66:8081/corp/good", {
-        user_id: userInfo.logged.user_id,
+        user_id: userInfo.user_id,
         corp_id: corpId,
       })
       .then((res) => {
@@ -29,7 +29,7 @@ function PlusGood(userInfo, corpId, setAlertMsg, setGoodAlert, mutate) {
         // 뮤테이션 갱신
         mutate(
           `http://52.79.165.66:8081/corp/select/${corpId}/${
-            userInfo.logged.user_id ?? "user"
+            userInfo.user_id ?? "user"
           }`
         );
       });
@@ -43,14 +43,14 @@ function PlusGood(userInfo, corpId, setAlertMsg, setGoodAlert, mutate) {
 }
 
 export default function InfoBanner({ corpId }) {
+  const { userInfo } = useUserInfo();
   const [goodAlert, setGoodAlert] = useState(false);
   const [AlertMsg, setAlertMsg] = useState("");
 
-  const userInfo = useSelector((state) => state);
   const { mutate } = useSWRConfig();
   const { data } = useSWR(
     `http://52.79.165.66:8081/corp/select/${corpId}/${
-      userInfo.logged.user_id ?? "user"
+      userInfo.user_id ?? "user"
     }`,
     (...args) => fetch(...args).then((res) => res.json())
   );
@@ -94,7 +94,7 @@ export default function InfoBanner({ corpId }) {
       </Container>
       {goodAlert ? (
         <ModalAlert
-          typeError={userInfo.logged.isLogged ? false : true}
+          typeError={userInfo.isLogged ? false : true}
           text={AlertMsg}
         />
       ) : null}

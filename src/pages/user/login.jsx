@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
 import { useDispatch } from "react-redux";
 import { loginAccount } from "../../store/LoggedState";
-import { COLOR } from "../../constants";
 
+import { UserLogin } from "../../api/UserAuthApi";
+
+import { COLOR } from "../../constants";
 import { Title } from "../../components/layouts";
 import ModalAlert from "../../components/ModalAlert";
 
@@ -15,30 +17,19 @@ export default function Login() {
   const router = useRouter();
 
   const [showAlert, setShowAlert] = useState(false);
-  const [userInput, setUserInput] = useState({
-    email: "",
-    password: "",
-  });
-  const handleUserInput = (e) => {
-    setUserInput({ ...userInput, [e.target.name]: e.target.value });
-  };
-  const handleSubmit = async (e) => {
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(
-        "http://52.79.165.66:8081/user/login",
-        JSON.stringify({
-          email: userInput.email,
-          password: userInput.password,
-        }),
-        { headers: { "Content-Type": `application/json` } }
-      )
+    UserLogin(userEmail, userPassword)
       .then((res) => {
         const { token, name, user_id } = res.data;
         dispatch(loginAccount({ user_name: name, user_id, token }));
         router.push("/");
       })
       .catch((res) => {
+        console.log(res.data);
         setShowAlert(true);
         setTimeout(() => {
           setShowAlert(false);
@@ -50,21 +41,33 @@ export default function Login() {
     <>
       <Title title={"로그인"} />
       <Container>
+        <Welcome>
+          환영합니다
+          <br />
+          <span>당신이 원하는 복지정보가 모인 곳</span>
+        </Welcome>
         <Form onSubmit={handleSubmit}>
-          <Label htmlFor='user-email'>이메일</Label>
-          <Input
-            type='email'
-            name='email'
-            value={userInput.email}
-            onChange={handleUserInput}
-          />
-          <Label htmlFor='user-pw'>비밀번호</Label>
-          <Input
-            type='password'
-            name='password'
-            value={userInput.password}
-            onChange={handleUserInput}
-          />
+          <Label>
+            이메일
+            <Input
+              type='email'
+              name='email'
+              autoFocus={true}
+              defaultChecked={true}
+              value={userEmail}
+              onChange={() => setUserEmail(e.target.value)}
+            />
+          </Label>
+          <Label>
+            비밀번호
+            <Input
+              type='password'
+              name='password'
+              defaultChecked={true}
+              value={userPassword}
+              onChange={() => setUserPassword(e.target.value)}
+            />
+          </Label>
           <Button
             type='submit'
             disabled={
@@ -90,40 +93,37 @@ export default function Login() {
 }
 
 const Container = styled.main`
-  position: relative;
-  height: 80vh;
+  min-height: 70vh;
+`;
+const Welcome = styled.h2`
+  margin: 36px 0 52px;
+  font-weight: 500;
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 2.1rem;
+  span {
+    font-size: 1.35rem;
+  }
 `;
 const Form = styled.form`
-  position: absolute;
-  padding: 40px;
-  top: 50%;
-  left: 50%;
-  width: 350px;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  &::before {
-    content: "로그인";
-    position: absolute;
-    display: inline-block;
-    top: -60px;
-    left: 50%;
-    font-size: 24px;
-    font-weight: 900;
-    transform: translateX(-50%);
-  }
+  margin: 32px auto;
+  max-width: 420px;
 `;
 const Label = styled.label`
   display: block;
-  font-size: 17px;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  &:has(input:focus) {
+    font-size: 1.35rem;
+  }
 `;
 const Input = styled.input`
   display: block;
-  margin: 10px 0 30px 0;
+  margin: 10px 0 56px;
   padding: 8px;
   width: 100%;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   border: none;
   outline: none;
   border-bottom: 2px solid black;

@@ -1,9 +1,4 @@
-import {
-  configureStore,
-  combineReducers,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
-import logger from "redux-logger";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -14,7 +9,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/lib/storage/session";
 
 import LoggedState from "../store/LoggedState";
 
@@ -25,7 +20,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  logged: LoggedState,
+  LoggedState,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
